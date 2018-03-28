@@ -1,6 +1,7 @@
 #ifndef MYBITOPS_H
 #define MYBITOPS_H
-//#include <vector>
+#include <vector>
+#include <boost/dynamic_bitset.hpp> 
 using namespace std;
 class mybitops{
 	public:
@@ -27,7 +28,7 @@ class mybitops{
 	/*
 	 * Use WAH decompression algorithm to decompress all the bitvector
 	 */ 
-	boost::dynamic_bitset<> uncompressIndex(vector<size_t> cvector, unsigned long uncompressed_size);
+	boost::dynamic_bitset<> uncompressIndex(vector<size_t> cvector, size_t uncompressed_size);
 	/*
 	 * Counts the number of setbits upto a certain position
 	 */
@@ -54,8 +55,6 @@ class mybitops{
 	 * just for the purpose of testing the CountOnesUpto function
 	 */
 	void test_count();
-	
-	
-	
-	};
+	void parallel_and(vector<size_t> &vector1, vector<size_t> &vector2);	
+};
 #endif

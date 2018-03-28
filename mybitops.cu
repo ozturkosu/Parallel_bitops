@@ -863,8 +863,7 @@ void mybitops::test_count()
 	cout<<"\n";
 
 }
-
-__global__ void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
+void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
 {
 
 }
