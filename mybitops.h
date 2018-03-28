@@ -23,6 +23,7 @@ class mybitops{
 	vector<size_t> logic_or(vector<size_t> vector1, vector<size_t> vector2);
 	/*
 	 * Use WAH compression algorithm to compress one bitvector
+	 * note: randomness increase the compression time
 	 */ 
 	vector<size_t> compressBitset(const boost::dynamic_bitset<> dbitset);
 	/*
@@ -32,7 +33,7 @@ class mybitops{
 	/*
 	 * Counts the number of setbits upto a certain position
 	 */
-	 int CountOnesUpto(vector<size_t> &compresed_vector, int position);
+	//  int CountOnesUpto(vector<size_t> &compresed_vector, int position);
 	 /*
 	 * Returns the word type:
 	 * 0: literal 
@@ -51,10 +52,11 @@ class mybitops{
 	  * 2:
 	  */
 	 int word_type(size_t word1);
+	//  void print_compressed(vector<size_t>);
 	/*
 	 * just for the purpose of testing the CountOnesUpto function
 	 */
-	void test_count();
+	// void test_count();
 	void parallel_and(vector<size_t> &vector1, vector<size_t> &vector2);	
 };
 #endif

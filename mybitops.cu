@@ -14,7 +14,7 @@ using namespace std;
   size_t word1 = (*it1);
   size_t word2 = (*it2);
 
-  bool allZeros = true;
+ // bool //allZeros = true;
 
   while(it1 != vector1.end() && it2 != vector2.end()) {
     if(ismyfill(word1) && ismyfill(word2)) {  //both are fill words
@@ -25,7 +25,7 @@ using namespace std;
 
       if(c1 == c2) {
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c1;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -44,7 +44,7 @@ using namespace std;
         word2 = *(++it2);
       } else if (c1 > c2) {
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c2;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -66,7 +66,7 @@ using namespace std;
         word2 = *(++it2);
       } else { //c2 > c1
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c1;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -94,7 +94,7 @@ using namespace std;
       if(isone1) { //if one, depend on literal
         if(ones > 0) {
           size_t n = 0xc0000000 + ones;
-          allZeros = false;
+          //allZeros = false;
           ones = 0;
           result_vector.push_back(n);
         }
@@ -103,7 +103,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (word2 != 0) allZeros = false;
+        //if (word2 != 0) //allZeros = false;
         result_vector.push_back(word2);
       } else { //id zero, generate a zero word
         if(ones > 0) {
@@ -130,7 +130,7 @@ using namespace std;
       if(isone2) { //if one, depend on literal
         if(ones > 0) {
           size_t n = 0xc0000000 + ones;
-          allZeros = false;
+          //allZeros = false;
           ones = 0;
           result_vector.push_back(n);
         }
@@ -139,7 +139,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (word1 != 0) allZeros = false;
+        if (word1 != 0) //allZeros = false;
         result_vector.push_back(word1);
       } else { //id zero, generate a zero word
         if(ones > 0) {
@@ -163,14 +163,14 @@ using namespace std;
       if(num == 0) {
         zeros += 31;
         if(ones > 0) {
-		  allZeros = false;
+		  //allZeros = false;
           size_t n = 0xc0000000 + ones;
           ones = 0;
           result_vector.push_back(n);
         }
       } else if (num == 0x7fffffff) {
         ones += 31;
-        allZeros = false;
+        //allZeros = false;
         if(zeros > 0) {
           size_t n = 0x80000000 + zeros;
           zeros = 0;
@@ -178,7 +178,7 @@ using namespace std;
         }
       } else {
         if(ones > 0) {
-          allZeros = false;
+          //allZeros = false;
           size_t n = 0xc0000000 + ones;
           ones = 0;
           result_vector.push_back(n);
@@ -188,7 +188,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (num != 0) allZeros = false;
+        if (num != 0) //allZeros = false;
         result_vector.push_back(num);
       }
       word1 = *(++it1);
@@ -196,7 +196,7 @@ using namespace std;
     }
   }
   if(ones > 0) {
-	allZeros = false;
+	//allZeros = false;
     size_t n = 0xc0000000 + ones;
     ones = 0;
     result_vector.push_back(n);
@@ -218,7 +218,7 @@ using namespace std;
   size_t word1 = (*it1);
   size_t word2 = (*it2);
 
-  bool allZeros = true;
+  //bool //allZeros = true;
   while(it1 != vector1.end() && it2 != vector2.end()) {
     
     if(ismyfill(word1) && ismyfill(word2)) {  //both are fill words
@@ -229,7 +229,7 @@ using namespace std;
 
       if(c1 == c2) {
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c1;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -248,7 +248,7 @@ using namespace std;
         word2 = *(++it2);
       } else if (c1 > c2) {
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c2;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -270,7 +270,7 @@ using namespace std;
         word2 = *(++it2);
       } else { //c2 > c1
         if(isone1 && isone2) {
-          allZeros = false;
+          //allZeros = false;
           ones += c1;
           if(zeros > 0) {
             size_t n = 0x80000000 + zeros;
@@ -298,7 +298,7 @@ using namespace std;
       if(isone1) { //if one, depend on literal
         if(ones > 0) {
           size_t n = 0xc0000000 + ones;
-          allZeros = false;
+          //allZeros = false;
           ones = 0;
           result_vector.push_back(n);
         }
@@ -307,7 +307,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (word2 != 0) allZeros = false;
+        //if (word2 != 0) //allZeros = false;
         result_vector.push_back(word2);
       } else { //id zero, generate a zero word
         if(ones > 0) {
@@ -334,7 +334,7 @@ using namespace std;
       if(isone2) { //if one, depend on literal
         if(ones > 0) {
           size_t n = 0xc0000000 + ones;
-          allZeros = false;
+          //allZeros = false;
           ones = 0;
           result_vector.push_back(n);
         }
@@ -343,7 +343,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (word1 != 0) allZeros = false;
+        //if (word1 != 0) //allZeros = false;
         result_vector.push_back(word1);
       } else { //id zero, generate a zero word
         if(ones > 0) {
@@ -367,14 +367,14 @@ using namespace std;
       if(num == 0) {
         zeros += 31;
         if(ones > 0) {
-		  allZeros = false;
+		  //allZeros = false;
           size_t n = 0xc0000000 + ones;
           ones = 0;
           result_vector.push_back(n);
         }
       } else if (num == 0x7fffffff) {
         ones += 31;
-        allZeros = false;
+        //allZeros = false;
         if(zeros > 0) {
           size_t n = 0x80000000 + zeros;
           zeros = 0;
@@ -382,7 +382,7 @@ using namespace std;
         }
       } else {
         if(ones > 0) {
-          allZeros = false;
+          //allZeros = false;
           size_t n = 0xc0000000 + ones;
           ones = 0;
           result_vector.push_back(n);
@@ -392,7 +392,7 @@ using namespace std;
           zeros = 0;
           result_vector.push_back(n);
         }
-        if (num != 0) allZeros = false;
+        //if (num != 0) //allZeros = false;
         result_vector.push_back(num);
       }
       word1 = *(++it1);
@@ -400,7 +400,7 @@ using namespace std;
     }
   }
   if(ones > 0) {
-	allZeros = false;
+	//allZeros = false;
     size_t n = 0xc0000000 + ones;
     ones = 0;
     result_vector.push_back(n);
@@ -732,85 +732,6 @@ boost::dynamic_bitset<> mybitops::uncompressIndex(vector<size_t> cvector, size_t
   } //end iterator
   return bitvector;
 }
-/*
- * counts the number of ones up to position i inconclusive*/
-
-int mybitops::CountOnesUpto(vector<size_t> &compressed_vector, int position)
-{
-clock_t tq = clock();
-
-	int current_position = 0;
-	int ones_count = 0;
-	/* main loop checks each and every word and calculates
-	 * the number of ones based on the type of the word it 
-	 * will break if the position reached.
-	 */
-	int it = 0;
-	for(auto word: compressed_vector)	                         
-	{
-		it++;
-		int wordType = word_type(word);
-
-			if(wordType==0)// if the word is literal
-			{
-				//cout<<"lit "<<hex<<word<<endl;
-				boost::dynamic_bitset<> word_bits(32, word); // convert word to bits TODO: check performance might be bottle neck
-				int i = 30;
-				if(it == compressed_vector.size())
-					i = position - current_position-1;
-				bool flag = false;
-				for(int j = i;j>=0;j--)// check up to the end of the array or if finished
-				{					
-					//cout<<dec<<i<<endl;
-					if(word_bits.test(j))//if word[i] == 1 then 
-					{
-						ones_count++;
-						//flag = true;
-					}
-					//cout<<dec<<current_position<<":" << position<<":"<<ones_count<<"   "<<word_bits.test(i)<<"\n";
-					//if(flag)
-					current_position++;
-					
-					if(current_position >= position)
-					{
-						//cout<<"returned\n";
-						return ones_count;
-					}				
-				}
-			}
-			else if (wordType==1) // if the word is zeros fill word
-			{
-				//cout<<"zeros "<<hex<<word<<endl;
-				int word_length = word & 0x3fffffff; // get the # of consecutive 0s
-				if((current_position+word_length)>=position)
-				{
-					//current_position = position;
-					return ones_count;
-				}
-				else
-				{
-					current_position += word_length;
-				}
-		
-			}
-			else if (wordType==2)// if the word is ones fill word
-			{
-				//cout<<"ones "<<hex<<word<<endl;
-				int word_length = word & 0x3fffffff; // get the # of consecutive 1s
-				if((current_position+word_length)>=position)
-				{
-					return ones_count+(position - current_position);
-				}
-				else
-				{
-					current_position += word_length;
-					ones_count+=word_length;
-				}
-
-			}
-	}
-	return ones_count;
-}
 
 int mybitops::ismyfill(size_t word1) {
   if((word1 & 0x80000000) == 0)
@@ -836,34 +757,46 @@ int mybitops::word_type(size_t word1) {
 		 
 	}
 }
+// void mybitops::print_compressed(vector<size_t>comp_bitset )
+// {
+//     for( size_t i = 0; i<comp_bitset.size();i++)
+//     {
+//         size_t word = comp_bitset[i];
+//         if(Bitops.word_type(word)==0)
+//             cout<<"L ";//0x"<<hex<<word<<dec<<" ";
+//         else if(Bitops.word_type(word)==1)
+//             cout<<"Z"<<(word & 0x3fffffff)<<" ";
+//         else
+//             cout<<"O"<<(word & 0x3fffffff)<<" ";
+//     }
+//     cout<<endl;
+// }
 
-void mybitops::test_count()
+__global__ void parallel_and_kernel()
 {
-	boost::dynamic_bitset<> test(64, 0xabcd007677aaaab7 );
-	cout<<"uncomp:"<<test<<endl;
-	vector<size_t> comp_test = compressBitset(test);
-
-	//shift based
-	cout<<"\nshiftbased:\n";
-	for(int i =0;i<64;i++)
-	{
-		boost::dynamic_bitset<> shifted_bit_representator;
-		int shifts = test.size()-i-1;
-		shifted_bit_representator = test<<(shifts);
-		int ones = shifted_bit_representator.count();	
-		cout<<ones<<",";
-	}
-	//fast
-	cout<<"\nfast:\n";
-	for(int i =0;i<64;i++)
-	{
-		cout<<dec<<CountOnesUpto(comp_test, i)<<",";
-		//assert(false);
-	}
-	cout<<"\n";
-
 }
 void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
 {
+  // ---- serial preprocessing phase -----
+  size_t* word_lengths1 = new size_t[vector1.size()]; 
+  for(int i = 0 ; i<vector1.size();i++)
+  {
+    size_t word = vector1[i];
+    int wt = word_type(word);
+    int word_length = 31;
+    if(wt != 0)// if a fill word
+      word_length = word & 0x3fffffff;
+    word_lengths1[i] = word_length;
+  }
+  size_t* word_lengths2 = new size_t[vector2.size()]; 
+  for(int i = 0 ; i<vector2.size();i++)
+  {
+    size_t word = vector2[i];
+    int wt = word_type(word);
+    int word_length = 31;
+    if(wt != 0)// if a fill word
+      word_length = word & 0x3fffffff;
+    word_lengths2[i] = word_length;
+  }
 
 }

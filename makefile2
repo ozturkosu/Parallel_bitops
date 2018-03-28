@@ -1,6 +1,6 @@
 all: main
 .PHONY : clean 
-main: main.cu
-	nvcc -O -o proj  *.cu 
+main: main.cpp
+	g++ *.cpp  -std=c++11 -o proj
 clean:
 	rm -rf *.o *.out 
