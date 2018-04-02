@@ -18,6 +18,17 @@ int main()
     vector<size_t> comp_bitset = Bitops.compressBitset(tempvector);
     clock_t t1 = clock();
     cout<<"compression time:"<< t1-t0<<endl;
-    Bitops.parallel_and(comp_bitset,comp_bitset);
+
+    clock_t t2 = clock();
+    int par_size = (Bitops.parallel_and(comp_bitset,comp_bitset)).size();
+    clock_t t3 = clock();
+    cout<<"parallel_and time:"<< t3-t2<<endl;
+    cout<<"par_and size:"<< par_size<<endl;
+
+    clock_t t4 = clock();
+    int seq_size = (Bitops.logic_and(comp_bitset,comp_bitset)).size();    
+    clock_t t5 = clock();
+    cout<<"seq_and time:"<< t5-t4<<endl;
+    cout<<"seq_and size:"<< seq_size<<endl;
     return 0;
 }
