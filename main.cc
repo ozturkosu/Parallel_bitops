@@ -18,6 +18,6 @@ int main()
     vector<size_t> comp_bitset = Bitops.compressBitset(tempvector);
     clock_t t1 = clock();
     cout<<"compression time:"<< t1-t0<<endl;
-    Bitops.parallel_and();
+    Bitops.parallel_and(comp_bitset,comp_bitset);
     return 0;
 }

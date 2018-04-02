@@ -3,11 +3,17 @@
 #include "mybitops.h"
 #include <vector>
 using namespace std;
-int NUM_THREADS = 4;
+int NUM_THREADS = 10;
 static pthread_barrier_t barrier1;
 struct th_arg{
-//pair<long,long> * arguments;
-long  tid;
+  int tid;
+  int workLength;
+  int vec1_size;
+  int vec2_size;
+  size_t* word_len1;
+  size_t* word_len2;
+  size_t* preSum1;
+  size_t* preSum2;
 };
 ////###################### Bit Operation ###################################
 
@@ -777,17 +783,62 @@ int mybitops::word_type(size_t word1) {
 //     }
 //     cout<<endl;
 // }
+int myBinarySearch (size_t* arr, int l, int r, int x)
+{
+  if (r >= l)
+  {        
+    int mid = l + (r - l)/2;    
+    // If the element is present at the middle 
+    // itself
+    if (arr[mid] == x)  
+      return mid;
+    // If element is smaller than mid, then 
+    // it can only be present in left subarray
+    if (arr[mid] > x) 
+      return myBinarySearch(arr, l, mid-1, x);
+    // Else the element can only be present
+    // in right subarray
+    return myBinarySearch(arr, mid+1, r, x);
+  }
+ 
+  // We reach here when element is not 
+  // present in array
+  if(r<0)
+    return 0;
+  return r;
+}
 void* thread_kernel(void* args)
 {
-  th_arg *thread_arg = (th_arg *)args;
-  int tid = thread_arg->tid;
-  cout<<"Thread number\n"<<tid<<endl;
+  // 1. unpacking the thread arguments
+  th_arg *thread_args = (th_arg *)args;
+  int tid = thread_args->tid;
+  int workLength = thread_args->workLength;
+  int vec1_size  = thread_args->vec1_size;
+  int vec2_size  = thread_args->vec2_size;
+  size_t* word_len1 = thread_args->word_len1;
+  size_t* word_len2 = thread_args->word_len2;
+  size_t* preSum1 =  thread_args->preSum1;
+  size_t* preSum2 =  thread_args->preSum2;
+
+
+  //2. compute the bit working area
+  int b1 = tid*workLength/NUM_THREADS;
+  int b2 = (tid+1)*workLength/NUM_THREADS;
+
+  //3. calc the word working area
+  int w1 = myBinarySearch(preSum1,0,vec1_size-1,b1);
+  int w2 = myBinarySearch(preSum2,0,vec2_size-1,b2);
+  printf("tid:%d b1:%d b2:%d w1:%d w2:%d\n",tid,b1,b2,w1,w2);
+
+  //4. compute the AND for your area
+  
+
 }
-void mybitops::parallel_and()//vector<size_t> &vector1, vector<size_t> &vector2)
-{
+void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
+{ 
   //######################## serial preprocessing phase #############################
   //###### 1. calculate size_vector and prefix_sum vector for each input vector 
- /* 
+ 
   size_t* word_lengths1 = new size_t[vector1.size()]; 
   size_t* prefix_sum1 = new size_t[vector1.size()]; 
   size_t pre_sum1 = 0;
@@ -808,7 +859,7 @@ void mybitops::parallel_and()//vector<size_t> &vector1, vector<size_t> &vector2)
   size_t* word_lengths2 = new size_t[vector2.size()]; 
   size_t* prefix_sum2 = new size_t[vector2.size()];   
   size_t pre_sum2 = 0;
-  size_t vector2_bit_leng th = 0;  
+  size_t vector2_bit_length = 0;  
   for(int i = 0 ; i<vector2.size();i++)
   {
     size_t word = vector2[i];
@@ -822,17 +873,33 @@ void mybitops::parallel_and()//vector<size_t> &vector1, vector<size_t> &vector2)
     vector2_bit_length+=word_length;    
   }
   int min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
-*/  
+ 
   //####### 2. multi threading
+  
+  //2.1 instantiate the threads
   pthread_t *threads;
   threads = new pthread_t[NUM_THREADS];
   void *th_status;
   int rc;
+
+  //2.2 thread fork
   for(int i=0; i < NUM_THREADS; i++)
   {
+    //2.2.1 create the thread arguments
     th_arg *thread_args;
 		thread_args = new th_arg;
     thread_args->tid = i;
+    thread_args->workLength = min_bit_length;
+    thread_args->vec1_size = vector1.size();
+    thread_args->vec2_size = vector2.size();
+    
+    thread_args->word_len1 = word_lengths1;
+    thread_args->word_len2 = word_lengths2;
+    thread_args->preSum1 = prefix_sum1;
+    thread_args->preSum2 = prefix_sum2;
+      
+
+    //2.2.2 fire the threads
     rc = pthread_create(&threads[i], NULL,thread_kernel, (void*) thread_args);
     if(rc)
     {
@@ -841,6 +908,7 @@ void mybitops::parallel_and()//vector<size_t> &vector1, vector<size_t> &vector2)
     }
   }
 
+  //2.3 thread join
   for(int j=0; j < NUM_THREADS; j++)
   {
     rc = pthread_join( threads[j], NULL); 
