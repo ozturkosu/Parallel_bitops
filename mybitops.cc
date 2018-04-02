@@ -3,6 +3,12 @@
 #include "mybitops.h"
 #include <vector>
 using namespace std;
+int NUM_THREADS = 4;
+static pthread_barrier_t barrier1;
+struct th_arg{
+//pair<long,long> * arguments;
+long  tid;
+};
 ////###################### Bit Operation ###################################
 
 
@@ -771,14 +777,22 @@ int mybitops::word_type(size_t word1) {
 //     }
 //     cout<<endl;
 // }
-
-__global__ void parallel_and_kernel()
+void* thread_kernel(void* args)
 {
+  th_arg *thread_arg = (th_arg *)args;
+  int tid = thread_arg->tid;
+  cout<<"Thread number\n"<<tid<<endl;
 }
-void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
+void mybitops::parallel_and()//vector<size_t> &vector1, vector<size_t> &vector2)
 {
-  // ---- serial preprocessing phase -----
+  //######################## serial preprocessing phase #############################
+  //###### 1. calculate size_vector and prefix_sum vector for each input vector 
+ /* 
   size_t* word_lengths1 = new size_t[vector1.size()]; 
+  size_t* prefix_sum1 = new size_t[vector1.size()]; 
+  size_t pre_sum1 = 0;
+  size_t vector1_bit_length = 0;
+
   for(int i = 0 ; i<vector1.size();i++)
   {
     size_t word = vector1[i];
@@ -787,8 +801,14 @@ void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
     if(wt != 0)// if a fill word
       word_length = word & 0x3fffffff;
     word_lengths1[i] = word_length;
+    prefix_sum1[i] = pre_sum1+word_length;
+    pre_sum1 = prefix_sum1[i];
+    vector1_bit_length+=word_length;
   }
   size_t* word_lengths2 = new size_t[vector2.size()]; 
+  size_t* prefix_sum2 = new size_t[vector2.size()];   
+  size_t pre_sum2 = 0;
+  size_t vector2_bit_leng th = 0;  
   for(int i = 0 ; i<vector2.size();i++)
   {
     size_t word = vector2[i];
@@ -797,6 +817,37 @@ void mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2)
     if(wt != 0)// if a fill word
       word_length = word & 0x3fffffff;
     word_lengths2[i] = word_length;
+    prefix_sum2[i] = pre_sum2+word_length;
+    pre_sum2 = prefix_sum2[i];
+    vector2_bit_length+=word_length;    
+  }
+  int min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+*/  
+  //####### 2. multi threading
+  pthread_t *threads;
+  threads = new pthread_t[NUM_THREADS];
+  void *th_status;
+  int rc;
+  for(int i=0; i < NUM_THREADS; i++)
+  {
+    th_arg *thread_args;
+		thread_args = new th_arg;
+    thread_args->tid = i;
+    rc = pthread_create(&threads[i], NULL,thread_kernel, (void*) thread_args);
+    if(rc)
+    {
+      cout<<"ERROR; return code from pthread_create() is "<< rc<<endl;
+      exit(-1);
+    }
   }
 
+  for(int j=0; j < NUM_THREADS; j++)
+  {
+    rc = pthread_join( threads[j], NULL); 
+    if(rc)
+    {
+      cout<<"ERROR; return code from pthread_join() is "<< rc<<endl;
+      exit(-1);
+    }
+  }
 }

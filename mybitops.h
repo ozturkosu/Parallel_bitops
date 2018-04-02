@@ -57,6 +57,6 @@ class mybitops{
 	 * just for the purpose of testing the CountOnesUpto function
 	 */
 	// void test_count();
-	void parallel_and(vector<size_t> &vector1, vector<size_t> &vector2);	
+	void parallel_and();//vector<size_t> &vector1, vector<size_t> &vector2);	
 };
 #endif
