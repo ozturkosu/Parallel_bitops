@@ -3,7 +3,7 @@
 using namespace std;
 int main()
 {
-    size_t items = 10000000;
+    size_t items = 100000000;
     float fill_percent = .001;
     boost::dynamic_bitset<> tempvector(items);
     for(int i=0; i<items*fill_percent; i++) {
