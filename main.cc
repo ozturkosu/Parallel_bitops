@@ -76,7 +76,7 @@ int main()
         cout<<"compression time:"<< t1-t0<<endl;
         cout<<"vector size:"<< comp_bitset1.size()<<endl;
         comp_bitset2 = comp_bitset1;
-        save_vector(comp_bitset1,"./vec1", 1000);
+        save_vector(comp_bitset1,"./vec3", 5000);
     }
     else
     {
