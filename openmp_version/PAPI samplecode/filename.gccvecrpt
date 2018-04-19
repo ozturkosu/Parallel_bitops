@@ -1,0 +1,333 @@
+
+Analyzing loop at pa1-p1.c:96
+
+pa1-p1.c:96: note: failed: evolution of base is not affine.
+
+pa1-p1.c:96: note: bad data references.
+Analyzing loop at pa1-p1.c:97
+
+pa1-p1.c:97: note: not vectorized: not suitable for strided load _33 = *_32[i_45];
+
+pa1-p1.c:97: note: bad data references.
+pa1-p1.c:94: note: vectorized 0 loops in function.
+
+pa1-p1.c:96: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:94: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:94: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:99: note: can't determine dependence between *_10 and *_28
+pa1-p1.c:99: note: can't determine dependence between *pretmp_80[j_43] and *_10
+pa1-p1.c:99: note: can't determine dependence between *pretmp_80[j_43] and *_28
+pa1-p1.c:99: note: can't determine dependence between *pretmp_82 and *_10
+pa1-p1.c:99: note: can't determine dependence between *pretmp_82 and *_28
+pa1-p1.c:99: note: can't determine dependence between *_10 and *_28
+pa1-p1.c:99: note: not vectorized: unhandled data dependence in basic block.
+
+pa1-p1.c:96: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:94: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:94: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:102: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at pa1-p1.c:107
+
+pa1-p1.c:107: note: failed: evolution of base is not affine.
+
+pa1-p1.c:107: note: bad data references.
+Analyzing loop at pa1-p1.c:108
+
+pa1-p1.c:108: note: not vectorized: not suitable for strided load _33 = *_32[i_45];
+
+pa1-p1.c:108: note: bad data references.
+pa1-p1.c:104: note: vectorized 0 loops in function.
+
+pa1-p1.c:107: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:104: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:104: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:110: note: can't determine dependence between *_10 and *_28
+pa1-p1.c:110: note: can't determine dependence between *pretmp_80[j_43] and *_10
+pa1-p1.c:110: note: can't determine dependence between *pretmp_80[j_43] and *_28
+pa1-p1.c:110: note: can't determine dependence between *pretmp_82 and *_10
+pa1-p1.c:110: note: can't determine dependence between *pretmp_82 and *_28
+pa1-p1.c:110: note: can't determine dependence between *_10 and *_28
+pa1-p1.c:110: note: not vectorized: unhandled data dependence in basic block.
+
+pa1-p1.c:107: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:104: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:104: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:113: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:121: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:122: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:123: note: not vectorized: no vectype for stmt: Tp ={v} {CLOBBER};
+ scalar_type: struct timeval
+pa1-p1.c:123: note: misalign = 0 bytes of ref Tp.tv_sec
+pa1-p1.c:123: note: misalign = 8 bytes of ref Tp.tv_usec
+pa1-p1.c:123: note: misalign = 0 bytes of ref Tzp
+pa1-p1.c:123: note: not consecutive access Tzp ={v} {CLOBBER};
+
+pa1-p1.c:123: note: Failed to SLP the basic block.
+pa1-p1.c:123: note: not vectorized: failed to find SLP opportunities in basic block.
+
+Analyzing loop at pa1-p1.c:133
+
+pa1-p1.c:133: note: not vectorized: control flow in loop.
+pa1-p1.c:133: note: bad loop form.
+pa1-p1.c:126: note: vectorized 0 loops in function.
+
+pa1-p1.c:133: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:126: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:135: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:135: note: Unknown alignment for access: *wref_11(D)
+pa1-p1.c:135: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:135: note: Unknown alignment for access: *w_15(D)
+pa1-p1.c:135: note: Failed to SLP the basic block.
+pa1-p1.c:135: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:136: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:137: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:138: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:126: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:133: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:126: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:142: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:143: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:146: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:147: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at pa1-p1.c:80
+
+pa1-p1.c:80: note: not vectorized: multiple nested loops.
+pa1-p1.c:80: note: bad loop form.
+Analyzing loop at pa1-p1.c:107
+
+pa1-p1.c:107: note: not vectorized, possible dependence between data-refs 
+pa1-p1.c:107: note: bad data dependence.
+Analyzing loop at pa1-p1.c:108
+
+pa1-p1.c:108: note: misalign = 0 bytes of ref *_87
+pa1-p1.c:108: note: misalign = 0 bytes of ref *_87
+pa1-p1.c:108: note: misalign = 0 bytes of ref *_101
+pa1-p1.c:108: note: Unknown alignment for access: A
+pa1-p1.c:108: note: misalign = 0 bytes of ref *_101
+pa1-p1.c:108: note: Unknown misalignment, is_packed = 0
+pa1-p1.c:108: note: vector alignment may not be reachable
+pa1-p1.c:108: note: virtual phi. skip.
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: num. args = 4 (not unary/binary/ternary op).
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: num. args = 4 (not unary/binary/ternary op).
+pa1-p1.c:108: note: not ssa-name.
+pa1-p1.c:108: note: use not simple.
+pa1-p1.c:108: note: single-element interleaving not supported for not adjacent vector loads
+
+pa1-p1.c:108: note: not vectorized: relevant stmt not supported: _106 = MEM[(double[0:D.4541] *)_105][i_152];
+
+pa1-p1.c:108: note: bad operation or unsupported loop bound.
+Analyzing loop at pa1-p1.c:72
+
+pa1-p1.c:72: note: misalign = 0 bytes of ref zz[i_142]
+pa1-p1.c:72: note: virtual phi. skip.
+
+Vectorizing loop at pa1-p1.c:72
+
+Analyzing loop at pa1-p1.c:61
+
+pa1-p1.c:61: note: not vectorized: multiple nested loops.
+pa1-p1.c:61: note: bad loop form.
+Analyzing loop at pa1-p1.c:96
+
+pa1-p1.c:96: note: not vectorized, possible dependence between data-refs 
+pa1-p1.c:96: note: bad data dependence.
+Analyzing loop at pa1-p1.c:97
+
+pa1-p1.c:97: note: misalign = 0 bytes of ref *_58
+pa1-p1.c:97: note: misalign = 0 bytes of ref *_58
+pa1-p1.c:97: note: misalign = 0 bytes of ref *_72
+pa1-p1.c:97: note: Unknown alignment for access: A
+pa1-p1.c:97: note: misalign = 0 bytes of ref *_72
+pa1-p1.c:97: note: Unknown misalignment, is_packed = 0
+pa1-p1.c:97: note: vector alignment may not be reachable
+pa1-p1.c:97: note: virtual phi. skip.
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: num. args = 4 (not unary/binary/ternary op).
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: num. args = 4 (not unary/binary/ternary op).
+pa1-p1.c:97: note: not ssa-name.
+pa1-p1.c:97: note: use not simple.
+pa1-p1.c:97: note: single-element interleaving not supported for not adjacent vector loads
+
+pa1-p1.c:97: note: not vectorized: relevant stmt not supported: _77 = MEM[(double[0:D.4509] *)_76][i_150];
+
+pa1-p1.c:97: note: bad operation or unsupported loop bound.
+Analyzing loop at pa1-p1.c:40
+
+pa1-p1.c:40: note: misalign = 0 bytes of ref x[i_141]
+pa1-p1.c:40: note: misalign = 0 bytes of ref y[i_141]
+pa1-p1.c:40: note: misalign = 0 bytes of ref z[i_141]
+pa1-p1.c:40: note: misalign = 0 bytes of ref yy[i_141]
+pa1-p1.c:40: note: misalign = 0 bytes of ref zz[i_141]
+pa1-p1.c:40: note: inner step doesn't divide the vector-size.
+pa1-p1.c:40: note: Unknown alignment for access: A
+pa1-p1.c:40: note: not vectorized: complicated access pattern.
+pa1-p1.c:40: note: bad data access.
+Analyzing loop at pa1-p1.c:45
+
+pa1-p1.c:45: note: misalign = 0 bytes of ref A[i_141][j_143]
+pa1-p1.c:45: note: virtual phi. skip.
+
+Vectorizing loop at pa1-p1.c:45
+
+pa1-p1.c:25: note: vectorized 2 loops in function.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:42: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:42: note: Unknown alignment for access: x
+pa1-p1.c:42: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:42: note: Unknown alignment for access: y
+pa1-p1.c:42: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:42: note: Unknown alignment for access: z
+pa1-p1.c:42: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:42: note: Unknown alignment for access: yy
+pa1-p1.c:42: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:42: note: Unknown alignment for access: zz
+pa1-p1.c:42: note: Failed to SLP the basic block.
+pa1-p1.c:42: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:45: note: not vectorized: no vectype for stmt: MEM[(double[4096][4096] *)vect_pA.80_172] = vect_var_.78_177;
+ scalar_type: vector(2) double
+pa1-p1.c:45: note: Failed to SLP the basic block.
+pa1-p1.c:45: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:40: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:60: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:99: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:99: note: Unknown alignment for access: y
+pa1-p1.c:99: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:99: note: Unknown alignment for access: *(&A + (long unsigned int) i_150 * 32768)
+pa1-p1.c:99: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:99: note: Unknown alignment for access: y
+pa1-p1.c:99: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:99: note: Unknown alignment for access: z
+pa1-p1.c:99: note: Unknown alignment for access: A
+pa1-p1.c:99: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:99: note: Unknown alignment for access: z
+pa1-p1.c:99: note: Failed to SLP the basic block.
+pa1-p1.c:99: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:96: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:25: note: Unknown alignment for access: x
+pa1-p1.c:25: note: Failed to SLP the basic block.
+pa1-p1.c:25: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:61: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:62: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:68: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:69: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:74: note: not vectorized: no vectype for stmt: MEM[(double[4096] *)vect_pzz.65_224] = vect_cst_.64_226;
+ scalar_type: vector(2) double
+pa1-p1.c:74: note: Failed to SLP the basic block.
+pa1-p1.c:74: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:79: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:110: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:110: note: Unknown alignment for access: yy
+pa1-p1.c:110: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:110: note: Unknown alignment for access: *(&A + (long unsigned int) i_152 * 32768)
+pa1-p1.c:110: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:110: note: Unknown alignment for access: yy
+pa1-p1.c:110: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:110: note: Unknown alignment for access: zz
+pa1-p1.c:110: note: Unknown alignment for access: A
+pa1-p1.c:110: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:110: note: Unknown alignment for access: zz
+pa1-p1.c:110: note: Failed to SLP the basic block.
+pa1-p1.c:110: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:107: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: SLP: step doesn't divide the vector-size.
+pa1-p1.c:25: note: Unknown alignment for access: x
+pa1-p1.c:25: note: Failed to SLP the basic block.
+pa1-p1.c:25: note: not vectorized: failed to find SLP opportunities in basic block.
+
+pa1-p1.c:80: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:25: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:81: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:87: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:88: note: not vectorized: not enough data-refs in basic block.
+
+pa1-p1.c:151: note: not vectorized: not enough data-refs in basic block.

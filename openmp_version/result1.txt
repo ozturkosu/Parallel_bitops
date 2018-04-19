@@ -1,0 +1,7 @@
+Usage: ./proj num_threads
+***************************************************************
+Loading vector from ./lvec1
+Loading vector from ./lvec1
+vec1Size: 322581000 vec2Size: 322581000
+multi-threading time:250000
+seq_and time:6340000
