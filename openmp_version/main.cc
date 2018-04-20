@@ -84,8 +84,8 @@ int main(int argc, char** argv)
     }
     else
     {
-        comp_bitset1 = load_vector("./lvec1");
-        comp_bitset2 = load_vector("./lvec1");        
+        comp_bitset1 = load_vector("../data/lvec1");
+        comp_bitset2 = load_vector("../data/lvec1");        
     }
 
     // clock_t t2 = clock();

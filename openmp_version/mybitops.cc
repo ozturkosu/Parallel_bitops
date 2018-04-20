@@ -11,18 +11,31 @@ unordered_map<int,vector<size_t>*> results; // key:tid, value:pointer to partial
 
 vector<size_t> mybitops::logic_and_ref(vector<size_t>*( v1),vector<size_t>*( v2), size_t v1begin, size_t  v1end,
                                         size_t v2begin, size_t  v2end ) {
-  clock_t t0 = clock();
-  
   size_t ones = 0, zeros = 0;
   vector<size_t> result_vector;
+  result_vector.reserve(v1end-v1begin);
   size_t it1 = v1begin;
   size_t it2 = v2begin;
   size_t word1 = (*v1)[it1];
   size_t word2 = (*v2)[it2];
   size_t iters = 0;
+  clock_t t0 = clock(); 
+  
+  int count = 0; 
+  /*while(it1 <= v1end && it2 <= v2end) // this does work !
+  {
+    size_t temp1 = (*v1)[it1];
+    size_t temp2 = (*v2)[it2]; 
+    result_vector.push_back(temp1*temp2);
+    it1++;
+    it2++; 
+    count++;
+  }
+  clock_t t4 = clock(); 
+  */
   while(it1 <= v1end && it2 <= v2end) {
     iters++;
-    
+    count++;
     if(ismyfill(word1) && ismyfill(word2)) {  //both are fill words
       size_t c1 = word1 & 0x3fffffff;         //get the len of fill word
       size_t c2 = word2 & 0x3fffffff;         //get the len of fill word
@@ -213,7 +226,7 @@ vector<size_t> mybitops::logic_and_ref(vector<size_t>*( v1),vector<size_t>*( v2)
   }
   clock_t t1 = clock();
   // printf("and %u %u %u\n",v1end-v1begin,v2end-v2begin,iters);
-  printf("and_result_size %u \n",result_vector.size());
+  printf("seq_time: %u,seq_size:%u, count:%u \n",t1-t0,result_vector.size(),count);
   
 
   return result_vector;
@@ -408,10 +421,10 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
   ////@@@@@@@@@@@@@@@@@@@@@@@@@@@@ serial preprocessing phase @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   ////@@@@@ calculate size_vector and prefix_sum vector for each input vector 
   NUM_THREADS = n_threads;
-  clock_t t1 = clock();
+  // clock_t t1 = clock();
   size_t vec1_size = vector1.size();
   size_t vec2_size = vector2.size();
-  printf("vec1Size: %u vec2Size: %u\n",vec1_size,vec2_size);
+  // printf("vec1Size: %u vec2Size: %u\n",vec1_size,vec2_size);
   size_t* word_lengths1 = new size_t[vec1_size]; //vector of length of the words
   size_t* prefix_sum1 = new size_t[vec2_size]; // prefix-sum generated form word_lengths1
   size_t pre_sum1 = 0;
@@ -449,17 +462,20 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
   size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
   // printf("%u,%u,%u\n",vector1_bit_length,vector2_bit_length,min_bit_length);
   
-  clock_t t2 = clock();
+  // clock_t t2 = clock();
   // cout<<"preprocessing time:"<< t2-t1<<endl;
  
   ////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ multi threading @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // Request threads
     omp_set_num_threads(NUM_THREADS);
-    clock_t t3 = clock();
+
+    size_t *v1_ptr = &vector1[0];
+    size_t *v2_ptr = &vector2[0];
     
     #pragma  omp parallel //num_threads(10)
     {
     size_t actual_num_threads = omp_get_num_threads(); 
+    
     ////@@@@@@@@@@@@@@@@@@@@@@ 1. get the thread info @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       int tid; 
       tid = omp_get_thread_num();// query the current thread id
@@ -484,32 +500,38 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
 
     ////@@@@@@@@@@@@@@@@@@@@@@ 3. compute the AND for your area @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ////4.1  TODO: right alignment
-      vector<size_t> result_vector;
-      result_vector.reserve(4*(w12-w11));
+
+      float res_size = ((w12-w11)<(w22-w21))?(w12-w11):(w22-w21);  
+      size_t min_length = res_size * 1.01;//give 1% more capacity
+      vector<size_t> result_vector(min_length);
+      size_t *result_ptr = &result_vector[0];
+      // result_vector.reserve(min_length);
       // vector<size_t>* myResult = new vector<size_t>;      
       ////4.2 sequential_and my working area  
       ////***************************************** AND *****************************************************
       // *myResult = Bitops.logic_and_ref(vec1,vec2,w11,w12,w21,w22);    
       
-      size_t it1 = w11;
+      /*size_t it1 = w11;
       size_t it2 = w21; 
+      int count = 0;
       while(it1 <= w12 && it2 <= w22) // this does work !
       {
-        size_t temp1 = vector1[it1];
-        size_t temp2 = vector2[it2]; 
-        result_vector.push_back(temp1*temp2);
+        size_t temp1 = v1_ptr[it1];
+        size_t temp2 = v2_ptr[it2]; 
+        result_ptr[count]=(temp1*temp2);
         it1++;
         it2++; 
-      }
-      /*
+        count++;
+      }*/
+      clock_t t3 = clock();
+                
       size_t ones = 0, zeros = 0;
         size_t it1 = w11;
         size_t it2 = w21;
         size_t word1 = vector1[it1];
         size_t word2 = vector2[it2];
-        size_t iters = 0;
-        while(it1 <= w12 && it2 <= w22) {
-          iters++;  
+        size_t count = 0;
+        while(it1 <= w12 && it2 <= w22) { 
           if(ismyfill(word1) && ismyfill(word2)) {  //both are fill words
             size_t c1 = word1 & 0x3fffffff;         //get the len of fill word
             size_t c2 = word2 & 0x3fffffff;         //get the len of fill word
@@ -523,14 +545,18 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
                 if(zeros > 0) {
                   size_t n = 0x80000000 + zeros;
                   zeros = 0;
-                  result_vector.push_back(n);
+                  result_ptr[count] = n;
+                  count++;
+                  // result_vector.push_back(n);
                 }
               } else {
                 zeros += c1;
                 if(ones > 0) {
                   size_t n = 0xc0000000 + ones;
                   ones = 0;
-                  result_vector.push_back(n);
+                  result_ptr[count] = n;
+                  count++;
+                  // result_vector.push_back(n);
                 }
               }
               word1 = vector1[++it1];
@@ -542,14 +568,16 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
                 if(zeros > 0) {
                   size_t n = 0x80000000 + zeros;
                   zeros = 0;
-                  result_vector.push_back(n);
+                  result_ptr[count] = n;
+                  count++;
+                  // result_vector.push_back(n);
                 }
               } else {
                 zeros += c2;
                 if(ones > 0) {
                   size_t n = 0xc0000000 + ones;
                   ones = 0;
-                  result_vector.push_back(n);
+                  // result_vector.push_back(n);
                 }
               }
               if(isone1)
@@ -564,14 +592,18 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
                 if(zeros > 0) {
                   size_t n = 0x80000000 + zeros;
                   zeros = 0;
-                  result_vector.push_back(n);
+                  result_ptr[count] = n;
+                  count++;
+                  // result_vector.push_back(n);
                 }
               } else {
                 zeros += c1;
                 if(ones > 0) {
                   size_t n = 0xc0000000 + ones;
                   ones = 0;
-                  result_vector.push_back(n);
+                  result_ptr[count] = n;
+                  count++;
+                  // result_vector.push_back(n);
                 }
               }
               if(isone2)
@@ -589,19 +621,27 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
                 size_t n = 0xc0000000 + ones;
                 //allZeros = false;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               if(zeros > 0) {
                 size_t n = 0x80000000 + zeros;
                 zeros = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
-              result_vector.push_back(word2);
+              result_ptr[count] = word2;
+              count++;
+              // result_vector.push_back(word2);
             } else { //id zero, generate a zero word
               if(ones > 0) {
                 size_t n = 0xc0000000 + ones;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               zeros += 31;
             }
@@ -624,20 +664,28 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
                 size_t n = 0xc0000000 + ones;
                 //allZeros = false;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               if(zeros > 0) {
                 size_t n = 0x80000000 + zeros;
                 zeros = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               //if (word1 != 0) //allZeros = false;
-              result_vector.push_back(word1);
+              result_ptr[count] = word1;
+              count++;
+              // result_vector.push_back(word1);
             } else { //id zero, generate a zero word
               if(ones > 0) {
                 size_t n = 0xc0000000 + ones;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               zeros += 31;
             }
@@ -658,7 +706,9 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
             //allZeros = false;
                 size_t n = 0xc0000000 + ones;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
             } else if (num == 0x7fffffff) {
               ones += 31;
@@ -666,22 +716,30 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
               if(zeros > 0) {
                 size_t n = 0x80000000 + zeros;
                 zeros = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
             } else {
               if(ones > 0) {
                 //allZeros = false;
                 size_t n = 0xc0000000 + ones;
                 ones = 0;
-                result_vector.push_back(n);
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n);
               }
               if(zeros > 0) {
                 size_t n = 0x80000000 + zeros;
                 zeros = 0;
-                result_vector.push_back(n); //// freq access
+                result_ptr[count] = n;
+                count++;
+                // result_vector.push_back(n); //// freq access
               }
               //if (num != 0) //allZeros = false;
-              result_vector.push_back(num);//// freq access
+              result_ptr[count] = num;
+              count++;
+              // result_vector.push_back(num);//// freq access
             }
             word1 = vector1[++it1];
             word2 = vector2[++it2];
@@ -691,26 +749,31 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
         //allZeros = false;
           size_t n = 0xc0000000 + ones;
           ones = 0;
-          result_vector.push_back(n);
+          result_ptr[count] = n;
+          count++;
+          // result_vector.push_back(n);
         }
         if(zeros > 0) {
           size_t n = 0x80000000 + zeros;
           zeros = 0;
-          result_vector.push_back(n);
+          result_ptr[count] = n;
+          count++;
+          // result_vector.push_back(n);
         }
       
-      // printf("(%u,%u:%u)\n",tid,w12-w11,w22-w21);
-      */
-      printf("(%u,%u)\n",tid,result_vector.size());//,w11,w12,w21,w22);
+      // printf("(%u,%u:%u)\n",tid,w12-w11,w22-w21);      
+      
+      // printf("(%u,%u,res:%u,time:%u)\n",tid,result_vector.size(),min_length,t4-t3);//,w11,w12,w21,w22);
       ////****************************************************************************************************
-      // printf("tid:%u time:%u \n",tid,t3-t1);//,t2-t1,w12-w11,w22-w21);
+      clock_t t4 = clock(); 
+      
+      printf("par_time%u:%u,par_size:%u, count:%u \n",tid,t4-t3,result_vector.size(), count);//,t2-t1,w12-w11,w22-w21);
       ////4.1 add my results to the global map
       // results.insert({tid,myResult});
       // if(tid!=0)
     }// joins :)
 
-    clock_t t4 = clock();  
-    cout<<"multi-threading time:"<< t4-t3<<endl;
+    // cout<<"multi-threading time:"<< t4-t3<<endl;
     // clock_t t5 = clock();  
     /*
     ////@@@@@ Merge the the partial results
