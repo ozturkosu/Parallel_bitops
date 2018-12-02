@@ -3,6 +3,10 @@
 #include <fstream>
 #include <cstdlib>
 
+
+
+//Project Fpr GPU classes
+
 using namespace std;
 #define DATA_GENERATION false
 void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
@@ -13,14 +17,14 @@ void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
 	ofstream myfile;
 	myfile.open (dir);
 	if(myfile.is_open())
-	{	
+	{
 		myfile<<input_vector.size()*repeat_factor<<endl;
-        for(int i = 0;i<repeat_factor;i++)        
+        for(int i = 0;i<repeat_factor;i++)
             for(size_t word : input_vector)
                 myfile<<word<<" ";
 	}
 	else
-		cout<<"Could not open file "<<dir<<endl;										
+		cout<<"Could not open file "<<dir<<endl;
 	myfile.close();
 }
 vector<size_t> load_vector(string dir)
@@ -45,20 +49,20 @@ vector<size_t> load_vector(string dir)
 	}
 	else
 	{
-		cout<<"Could not open file "<<dir<<endl;				
+		cout<<"Could not open file "<<dir<<endl;
 	}
 	myfile.close();
     return result_vector;
 }
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
     cout<<"Usage: ./proj num_threads\n";
     cout<<"***************************************************************\n";
     int NUM_THREADS =atoi(argv[1]);
     vector<size_t> comp_bitset1;
     vector<size_t> comp_bitset2;
-    
-    mybitops Bitops;    
+
+    mybitops Bitops;
     if(DATA_GENERATION)
     {
         size_t items = 10000000;
@@ -85,7 +89,7 @@ int main(int argc, char** argv)
     else
     {
         comp_bitset1 = load_vector("../data/lvec1");
-        comp_bitset2 = load_vector("../data/lvec1");        
+        comp_bitset2 = load_vector("../data/lvec1");
     }
 
     // clock_t t2 = clock();
@@ -94,7 +98,7 @@ int main(int argc, char** argv)
     // cout<<"parallel_and time:"<< t3-t2<<endl;
 
     clock_t t4 = clock();
-    Bitops.logic_and_ref(&comp_bitset1,&comp_bitset2,0,comp_bitset1.size()-1,0,comp_bitset2.size()-1);    
+    Bitops.logic_and_ref(&comp_bitset1,&comp_bitset2,0,comp_bitset1.size()-1,0,comp_bitset2.size()-1);
     clock_t t5 = clock();
     cout<<"seq_and time:"<< t5-t4<<endl;
     pthread_exit(NULL);
