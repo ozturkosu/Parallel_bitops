@@ -2,7 +2,7 @@
 #include "mybitops.h"
 #include <fstream>
 #include <cstdlib>
-
+#include <cuda.h>
 
 
 //Project Fpr GPU classes
@@ -54,6 +54,54 @@ vector<size_t> load_vector(string dir)
 	myfile.close();
     return result_vector;
 }
+
+__global__ void parallel_and_kernel(vector<size_t> &vector1, vector<size_t> &vector2)
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+__global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &vector2,size_t * prefixSum)
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
 int main(int argc, char** argv)
 {
     cout<<"Usage: ./proj num_threads\n";
