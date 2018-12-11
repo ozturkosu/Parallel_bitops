@@ -511,7 +511,7 @@ int main(int argc, char** argv)
 		for(int i = 0 ; i<vec1_size;i++)
 		{
 			size_t word = comp_bitset1[i];
-			int wt = word_type(word);
+			int wt = Bitops.word_type(word);
 			size_t word_length = 31;
 			if(wt != 0)// if a fill word
 				word_length = word & 0x3fffffff;
@@ -532,7 +532,7 @@ int main(int argc, char** argv)
 		for(int i = 0 ; i<vec2_size;i++)
 	  {
 	    size_t word = comp_bitset2[i];
-	    int wt = word_type(word);
+	    int wt = Bitops.word_type(word);
 	    size_t word_length = 31;
 	    if(wt != 0)// if a fill word
 	      word_length = word & 0x3fffffff;
