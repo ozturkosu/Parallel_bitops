@@ -420,6 +420,8 @@ size_t myBinarySearch (size_t* arr, size_t l, size_t r, size_t x)
     return 0;
   return r;
 }
+
+/*
 vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &vector2, int n_threads)
 {
   ////@@@@@@@@@@@@@@@@@@@@@@@@@@@@ serial preprocessing phase @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -528,6 +530,8 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
         it2++;
         count++;
       }*/
+
+      /*emin
       clock_t t3 = clock();
 
       size_t ones = 0, zeros = 0;
@@ -788,10 +792,11 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
 
     clock_t t6 = clock();
     cout<<"merge time:"<< t4-t3<<endl;  */
-    vector<size_t> XX;
 
-  return XX;
-}
+    //vector<size_t> XX; emin
+
+  //return XX; emin
+//} emin
 
 
 void mybitops::save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)

@@ -502,7 +502,7 @@ int main(int argc, char** argv)
     }
 
     // clock_t t2 = clock();
-    Bitops.parallel_and(comp_bitset1,comp_bitset2,NUM_THREADS);
+    //Bitops.parallel_and(comp_bitset1,comp_bitset2,NUM_THREADS);
     // clock_t t3 = clock();
     // cout<<"parallel_and time:"<< t3-t2<<endl;
 
