@@ -463,6 +463,16 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 */
 
+__global__ void parallelAndDevice()
+{
+	thrust::device_vector<size_t>  comp_bitset1_device;
+	thrust::device_vector<size_t>  comp_bitset2_device;
+
+
+
+
+}
+
 int main(int argc, char** argv)
 {
     cout<<"Usage: ./proj num_threads\n";
@@ -521,7 +531,7 @@ int main(int argc, char** argv)
 		thrust::device_vector<size_t>  comp_bitset2_device;
 
 
-		
+
 
 
 
