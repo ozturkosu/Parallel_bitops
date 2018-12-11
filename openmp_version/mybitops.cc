@@ -792,7 +792,7 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
 }
 
 
-void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
+void mybitops::save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
 {
   //first line is the number of words
   // second line is the vector itself
@@ -812,7 +812,7 @@ void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
 
 }
 
-vector<size_t> load_vector(string dir)
+vector<size_t> mybitops::load_vector(string dir)
 {
 	////file structure:
     vector<size_t> result_vector;
