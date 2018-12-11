@@ -117,7 +117,7 @@ __device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 
 }
 
-/*
+
 
 //Kernel Method for AND operation
 __global__ void parallel_and_kernel(vector<size_t> &vector1, vector<size_t> &vector2)
@@ -461,7 +461,7 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 }
 
-*/
+
 
 int main(int argc, char** argv)
 {
