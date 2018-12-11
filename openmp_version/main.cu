@@ -14,58 +14,7 @@ using namespace std;
 
 #define CHUNK_SIZE 3200
 
-/*
-void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
-{
-    //first line is the number of words
-    // second line is the vector itself
-	cout<<"Saving input_vector on "<<dir<<endl;
-	ofstream myfile;
-	myfile.open(dir);
-	if(myfile.is_open())
-	{
-		myfile<<input_vector.size()*repeat_factor<<endl;
-        for(int i = 0;i<repeat_factor;i++)
-				{
-            for(size_t word : input_vector)
-						{
-                myfile<<word<<" ";
-						}
-				}
-	}
-	else
-		cout<<"Could not open file "<<dir<<endl;
-	myfile.close();
-}
-vector<size_t> load_vector(string dir)
-{
-	////file structure:
-    vector<size_t> result_vector;
-    cout<<"Loading vector from "<<dir<<endl;
 
-	ifstream myfile;
-	myfile.open (dir);
-    size_t number_of_words = 0;
-    myfile>>number_of_words;
-	if(myfile.is_open())
-	{
-		for(int j = 0;j< number_of_words;j++)
-		{
-			size_t word = 0;
-			myfile>>word;
-			result_vector.push_back(word);
-		}
-
-	}
-	else
-	{
-		cout<<"Could not open file "<<dir<<endl;
-	}
-	myfile.close();
-    return result_vector;
-}
-
-*/
 __device__ int word_type(size_t word1){
 
 	if((word1 & 0x80000000) == 0)
@@ -126,6 +75,9 @@ __global__ void parallel_and_kernel(vector<size_t> &vector1, vector<size_t> &vec
 		size_t vec2_size = vector2.size();
 
 
+		//lets start cuda part
+		int tid= blockIdx.x * blockDim.x + threadIdx.x ;
+
 		//Create word and prefix sum for vector 1
 
 		size_t* word_lengths1 = new size_t[vec1_size]; //vector of length of the words
@@ -175,8 +127,7 @@ __global__ void parallel_and_kernel(vector<size_t> &vector1, vector<size_t> &vec
 		size_t *v1_ptr = &vector1[0];
 		size_t *v2_ptr = &vector2[0];
 
-		//lets start cuda part
-		int tid= blockIdx.x * blockDim.x + threadIdx.x ;
+
 
 		size_t b1 = tid*CHUNK_SIZE;
 		size_t b2 = (tid+1)*CHUNK_SIZE;
@@ -465,16 +416,12 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 
 
-__global__ void parallelAndDevice()
+__global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * prefixSum1, size_t * wordSize1  , size_t * Vector2,
+	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector)
 {
-	 comp_bitset1_device[0]=1;
-
-
-
-
-
+	 //comp_bitset1_device[0]=1;
+	 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 }
-
 
 
 int main(int argc, char** argv)
@@ -536,6 +483,68 @@ int main(int argc, char** argv)
 
 		comp_bitset1_device = comp_bitset1 ;
 		comp_bitset2_device = comp_bitset2 ;
+
+
+		int* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
+		int* comp_dev_vect2 = thrust::raw_pointer_cast(&comp_bitset2_device) ;
+
+
+		//lets calculate prefix sum and word array for cuda calculation
+
+		size_t vec1_size = comp_bitset1.size();
+		size_t vec2_size = comp_bitset2.size();
+
+
+		//Create word and prefix sum for vector 1
+
+		size_t* word_lengths1 = new size_t[vec1_size]; //vector of length of the words
+		size_t* prefix_sum1 = new size_t[vec2_size]; // prefix-sum generated form word_lengths1
+		size_t pre_sum1 = 0;
+		size_t vector1_bit_length = 0;
+
+
+		//Generate prefix sum and wors size array for vector 1
+		for(int i = 0 ; i<vec1_size;i++)
+		{
+			size_t word = comp_bitset1[i];
+			int wt = word_type(word);
+			size_t word_length = 31;
+			if(wt != 0)// if a fill word
+				word_length = word & 0x3fffffff;
+			word_lengths1[i] = word_length;
+			prefix_sum1[i] = pre_sum1+word_length;
+			pre_sum1 = prefix_sum1[i];
+			vector1_bit_length+=word_length;
+		}
+
+
+		//Create word and prefix sum for vector 2
+
+		size_t* word_lengths2 = new size_t[vec2_size]; //vector of length of the words
+		size_t* prefix_sum2 = new size_t[vec2_size];   // prefix-sum generated form word_lengths1
+		size_t pre_sum2 = 0;
+		size_t vector2_bit_length = 0;
+
+		for(int i = 0 ; i<vec2_size;i++)
+	  {
+	    size_t word = comp_bitset2[i];
+	    int wt = word_type(word);
+	    size_t word_length = 31;
+	    if(wt != 0)// if a fill word
+	      word_length = word & 0x3fffffff;
+	    word_lengths2[i] = word_length;
+	    prefix_sum2[i] = pre_sum2+word_length;
+	    // printf("%u\n",word_length);
+	    pre_sum2 = prefix_sum2[i];
+	    vector2_bit_length+=word_length;
+	  }
+
+
+
+
+
+
+
 
 
 
