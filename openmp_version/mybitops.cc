@@ -494,6 +494,7 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
       ////2.2 calc the word area
       int w11 = myBinarySearch(prefix_sum1,0,vec1_size-1,b1);
       int w12 = myBinarySearch(prefix_sum1,0,vec1_size-1,b2);
+
       int w21 = myBinarySearch(prefix_sum2,0,vec2_size-1,b1);
       int w22 = myBinarySearch(prefix_sum2,0,vec2_size-1,b2);
 
@@ -788,4 +789,53 @@ vector<size_t> mybitops::parallel_and(vector<size_t> &vector1, vector<size_t> &v
     vector<size_t> XX;
 
   return XX;
+}
+
+
+void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
+{
+  //first line is the number of words
+  // second line is the vector itself
+  cout<<"Saving input_vector on "<<dir<<endl;
+  ofstream myfile;
+  myfile.open (dir);
+  if(myfile.is_open())
+  {
+    myfile<<input_vector.size()*repeat_factor<<endl;
+        for(int i = 0;i<repeat_factor;i++)
+            for(size_t word : input_vector)
+                myfile<<word<<" ";
+  }
+  else
+    cout<<"Could not open file "<<dir<<endl;
+  myfile.close();
+
+}
+
+vector<size_t> load_vector(string dir)
+{
+	////file structure:
+    vector<size_t> result_vector;
+    cout<<"Loading vector from "<<dir<<endl;
+
+	ifstream myfile;
+	myfile.open (dir);
+    size_t number_of_words = 0;
+    myfile>>number_of_words;
+	if(myfile.is_open())
+	{
+		for(int j = 0;j< number_of_words;j++)
+		{
+			size_t word = 0;
+			myfile>>word;
+			result_vector.push_back(word);
+		}
+
+	}
+	else
+	{
+		cout<<"Could not open file "<<dir<<endl;
+	}
+	myfile.close();
+    return result_vector;
 }

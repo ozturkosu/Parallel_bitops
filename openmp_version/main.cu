@@ -14,6 +14,7 @@ using namespace std;
 
 #define CHUNK_SIZE 3200
 
+/*
 void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
 {
     //first line is the number of words
@@ -64,7 +65,7 @@ vector<size_t> load_vector(string dir)
     return result_vector;
 }
 
-
+*/
 __device__ int word_type(size_t word1){
 
 	if((word1 & 0x80000000) == 0)
