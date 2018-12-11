@@ -10,7 +10,7 @@
 //Project Fpr GPU classes
 
 using namespace std;
-#define DATA_GENERATION false
+#define DATA_GENERATION true
 
 #define CHUNK_SIZE 3200
 
@@ -20,13 +20,17 @@ void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
     // second line is the vector itself
 	cout<<"Saving input_vector on "<<dir<<endl;
 	ofstream myfile;
-	myfile.open (dir);
+	myfile.open(dir);
 	if(myfile.is_open())
 	{
 		myfile<<input_vector.size()*repeat_factor<<endl;
         for(int i = 0;i<repeat_factor;i++)
+				{
             for(size_t word : input_vector)
+						{
                 myfile<<word<<" ";
+						}
+				}
 	}
 	else
 		cout<<"Could not open file "<<dir<<endl;
