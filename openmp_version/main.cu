@@ -534,8 +534,8 @@ int main(int argc, char** argv)
 		thrust::device_vector<size_t>  comp_bitset1_device;
 		thrust::device_vector<size_t>  comp_bitset2_device;
 
-
-
+		comp_bitset1_device = comp_bitset1 ;
+		comp_bitset2_device = comp_bitset2 ;
 
 
 
