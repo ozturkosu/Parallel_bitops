@@ -8,7 +8,7 @@
 //Project Fpr GPU classes
 
 using namespace std;
-#define DATA_GENERATION false
+#define DATA_GENERATION true
 void save_vector(vector<size_t>& input_vector ,string dir, int repeat_factor)
 {
     //first line is the number of words
