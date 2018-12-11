@@ -417,10 +417,14 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 
 __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * prefixSum1, size_t * wordSize1  , size_t * Vector2,
-	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector)
+	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector, size_t vector1_bit_length, size_t vector2min_bit_length)
 {
 	 //comp_bitset1_device[0]=1;
 	 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
+
+	 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+
+	 
 }
 
 
