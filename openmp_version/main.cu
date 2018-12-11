@@ -60,7 +60,31 @@ vector<size_t> load_vector(string dir)
     return result_vector;
 }
 
-__device__ size_t myBinarySearchGPU (size_t* arr, size_t l, size_t r, size_t x)
+
+__device__ int word_type(size_t word1){
+
+	if((word1 & 0x80000000) == 0)
+		return 0; // literal word
+	else{// fill word
+		if((word1 & 0xc0000000) == 0xc0000000)
+		return 2;//ones
+		else
+		return 1;//zeros
+
+	}
+
+}
+
+__device__ int ismyfill(size_t word1){
+
+	if((word1 & 0x80000000) == 0)
+		return 0; // literal word
+	else
+		return 1; // fill word
+
+}
+
+__device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 {
 	if(x==0)
 		return 0;
@@ -74,10 +98,10 @@ __device__ size_t myBinarySearchGPU (size_t* arr, size_t l, size_t r, size_t x)
 		// If element is smaller than mid, then
 		// it can only be present in left subarray
 		if (arr[mid] > x)
-			return myBinarySearch(arr, l, mid-1, x);
+			return myBinarySearchGPU(arr, l, mid-1, x);
 		// Else the element can only be present
 		// in right subarray
-		return myBinarySearch(arr, mid+1, r, x);
+		return myBinarySearchGPU(arr, mid+1, r, x);
 	}
 
 	// We reach here when element is not
