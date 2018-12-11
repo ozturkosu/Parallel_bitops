@@ -3,6 +3,8 @@
 #include <fstream>
 #include <cstdlib>
 #include <cuda.h>
+#include <thrust/host_vector.h>
+#include <thrust/device_vector.h>
 
 
 //Project Fpr GPU classes
@@ -58,6 +60,33 @@ vector<size_t> load_vector(string dir)
     return result_vector;
 }
 
+__device__ size_t myBinarySearchGPU (size_t* arr, size_t l, size_t r, size_t x)
+{
+	if(x==0)
+		return 0;
+	if (r >= l)
+	{
+		size_t mid = l + (r - l)/2;
+		// If the element is present at the middle
+		// itself
+		if (arr[mid] == x)
+			return mid;
+		// If element is smaller than mid, then
+		// it can only be present in left subarray
+		if (arr[mid] > x)
+			return myBinarySearch(arr, l, mid-1, x);
+		// Else the element can only be present
+		// in right subarray
+		return myBinarySearch(arr, mid+1, r, x);
+	}
+
+	// We reach here when element is not
+	// present in array
+	if(r<0)
+		return 0;
+	return r;
+
+}
 
 
 //Kernel Method for AND operation
@@ -123,11 +152,11 @@ __global__ void parallel_and_kernel(vector<size_t> &vector1, vector<size_t> &vec
 		size_t b2 = (tid+1)*CHUNK_SIZE;
 
 		////2.2 calc the word area
-		int w11 = myBinarySearch(prefix_sum1,0,vec1_size-1,b1);
-		int w12 = myBinarySearch(prefix_sum1,0,vec1_size-1,b2);
+		int w11 = myBinarySearchGPU(prefix_sum1,0,vec1_size-1,b1);
+		int w12 = myBinarySearchGPU(prefix_sum1,0,vec1_size-1,b2);
 
-		int w21 = myBinarySearch(prefix_sum2,0,vec2_size-1,b1);
-		int w22 = myBinarySearch(prefix_sum2,0,vec2_size-1,b2);
+		int w21 = myBinarySearchGPU(prefix_sum2,0,vec2_size-1,b1);
+		int w22 = myBinarySearchGPU(prefix_sum2,0,vec2_size-1,b2);
 
 		float res_size = ((w12-w11)<(w22-w21))?(w12-w11):(w22-w21);
 		size_t min_length = res_size * 1.01;//give 1% more capacity
@@ -456,26 +485,7 @@ int main(int argc, char** argv)
 
 		//Lets do it in Cuda version
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		//thrust::device_vector
 
 
 
