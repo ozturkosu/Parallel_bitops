@@ -461,11 +461,14 @@ int main(int argc, char** argv)
         comp_bitset2 = comp_bitset1;
         Bitops.save_vector(comp_bitset1,"./vec4", 1000);
     }
+		/*
     else
     {
         comp_bitset1 = Bitops.load_vector("../data/lvec1");
         comp_bitset2 = Bitops.load_vector("../data/lvec1");
     }
+
+		*/
 
     // clock_t t2 = clock();
     //Bitops.parallel_and(comp_bitset1,comp_bitset2,NUM_THREADS);
@@ -508,7 +511,7 @@ int main(int argc, char** argv)
 		size_t vector1_bit_length = 0;
 
 
-		//Generate prefix sum and wors size array for vector 1
+		//Generate prefix sum and words size array for vector 1
 		for(int i = 0 ; i<vec1_size;i++)
 		{
 			size_t word = comp_bitset1[i];
