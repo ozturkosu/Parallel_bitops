@@ -492,12 +492,12 @@ int main(int argc, char** argv)
         cout<<"compression time:"<< t1-t0<<endl;
         cout<<"vector size:"<< comp_bitset1.size()<<endl;
         comp_bitset2 = comp_bitset1;
-        save_vector(comp_bitset1,"./vec4", 1000);
+        Bitops.save_vector(comp_bitset1,"./vec4", 1000);
     }
     else
     {
-        comp_bitset1 = load_vector("../data/lvec1");
-        comp_bitset2 = load_vector("../data/lvec1");
+        comp_bitset1 = Bitops.load_vector("../data/lvec1");
+        comp_bitset2 = Bitops.load_vector("../data/lvec1");
     }
 
     // clock_t t2 = clock();
