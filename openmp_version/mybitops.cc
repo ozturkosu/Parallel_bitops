@@ -368,12 +368,18 @@ int mybitops::ismyfill(size_t word1) {
   else
     return 1; // fill word
 }
+
+/*
 int ismyfill(size_t word1) {
   if((word1 & 0x80000000) == 0)
     return 0; // literal word
   else
     return 1; // fill word
 }
+
+
+*/
+
 /*
  * Returns the word type:
  * 0: literal
