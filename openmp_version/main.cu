@@ -438,8 +438,8 @@ int main(int argc, char** argv)
     vector<size_t> comp_bitset2;
 
     mybitops Bitops;
-    if(DATA_GENERATION)
-    {
+    //if(DATA_GENERATION)
+    //{
         size_t items = 10000000;
         float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
@@ -460,7 +460,7 @@ int main(int argc, char** argv)
         cout<<"vector size:"<< comp_bitset1.size()<<endl;
         comp_bitset2 = comp_bitset1;
         Bitops.save_vector(comp_bitset1,"./vec4", 1000);
-    }
+    //}
 		/*
     else
     {
