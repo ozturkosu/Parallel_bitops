@@ -463,6 +463,8 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 */
 
+/*
+
 __global__ void parallelAndDevice(device_vector<size_t> * comp_bitset1_device)
 {
 	 comp_bitset1_device[0]=1;
@@ -472,6 +474,8 @@ __global__ void parallelAndDevice(device_vector<size_t> * comp_bitset1_device)
 
 
 }
+
+*/
 
 int main(int argc, char** argv)
 {
