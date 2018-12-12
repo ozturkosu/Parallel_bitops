@@ -422,7 +422,7 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 //comp_bitset1_device[0]=1;
 	 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 
-	 //size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+	 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
 
 }
