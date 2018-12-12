@@ -440,6 +440,7 @@ int main(int argc, char** argv)
     mybitops Bitops;
     //if(DATA_GENERATION)
     //{
+				cout<<"data generation*\n";
         size_t items = 10000000;
         float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
