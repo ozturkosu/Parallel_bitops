@@ -462,12 +462,12 @@ int main(int argc, char** argv)
 
 		cudaEvent_t startEvent, stopEvent;
 
-		size_t * Vector1 = (size_t)malloc( vec1_size * sizeof(size_t)) ;
-		size_t * Vector2 = (size_t)malloc( vec2_size * sizeof(size_t)) ;
+		size_t * Vector1 = (size_t*)malloc( vec1_size * sizeof(size_t)) ;
+		size_t * Vector2 = (size_t*)malloc( vec2_size * sizeof(size_t)) ;
 
 		size_t outVectorSize = (vec1_size < vec2_size)?vec1_size:vec2Size ;
 
-		size_t * outVector = (size_t)malloc(outVectorSize * sizeof(size_t) ) ;
+		size_t * outVector = (size_t*)malloc(outVectorSize * sizeof(size_t) ) ;
 
 
 		size_t * Vector1_device;
@@ -487,7 +487,7 @@ int main(int argc, char** argv)
 		cudaMalloc((void**) &word_length_device2 , vec2_size * sizeof(size_t)) ;
 
 
-		
+
 
 
 
