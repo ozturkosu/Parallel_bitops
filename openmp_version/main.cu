@@ -66,7 +66,57 @@ __device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 
 }
 
+__global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t * Vector2,
+	int Vector2_size ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
+{
+		 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 
+		 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+
+		 size_t* word_lengths1 = new size_t[vec1_size]; //vector of length of the words
+ 		 size_t* prefix_sum1 = new size_t[vec1_size]; // prefix-sum generated form word_lengths1
+ 		 size_t pre_sum1 = 0;
+ 		 size_t vector1_bit_length = 0;
+
+		 //Generate prefix sum and words size array for vector 1
+		 for(int i = 0 ; i<vec1_size;i++)
+		 {
+			 size_t word = comp_bitset1[i];
+			 int wt = Bitops.word_type(word);
+			 size_t word_length = 31;
+			 if(wt != 0)// if a fill word
+				 word_length = word & 0x3fffffff;
+			 word_lengths1[i] = word_length;
+			 prefix_sum1[i] = pre_sum1+word_length;
+			 pre_sum1 = prefix_sum1[i];
+			 vector1_bit_length+=word_length;
+		 }
+
+
+
+		 size_t* word_lengths2 = new size_t[vec2_size]; //vector of length of the words
+		 size_t* prefix_sum2 = new size_t[vec2_size];   // prefix-sum generated form word_lengths1
+		 size_t pre_sum2 = 0;
+		 size_t vector2_bit_length = 0;
+
+		 for(int i = 0 ; i<vec2_size;i++)
+		 {
+			 size_t word = comp_bitset2[i];
+			 int wt = Bitops.word_type(word);
+			 size_t word_length = 31;
+			 if(wt != 0)// if a fill word
+				 word_length = word & 0x3fffffff;
+			 word_lengths2[i] = word_length;
+			 prefix_sum2[i] = pre_sum2+word_length;
+			 // printf("%u\n",word_length);
+			 pre_sum2 = prefix_sum2[i];
+			 vector2_bit_length+=word_length;
+		 }
+
+
+
+
+}
 
 
 
@@ -488,11 +538,6 @@ int main(int argc, char** argv)
 		std::copy(comp_bitset1.begin(), comp_bitset1.end() , Vector1);
 		std::copy(comp_bitset2.begin(), comp_bitset2.end() , Vector2);
 
-		printf("%d\n", Vector1[10]);
-		printf("%d\n", Vector1[11]);
-		printf("%d\n", Vector1[12]);
-		printf("%d\n", Vector1[13]);
-
 
 		cudaMalloc((void**) &Vector1_device , vec1_size * sizeof(size_t) );
 		cudaMalloc((void**) &Vector2_device , vec2_size * sizeof(size_t) );
@@ -521,9 +566,14 @@ int main(int argc, char** argv)
 
 		cudaEventRecord(startEvent_kernel, 0) ;
 
+		clock_t t_KERNEL1 = clock();
+
 		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
 		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
 
+		clock_t t_KERNEL2 = clock();
+
+		cout<<"seq_and time:"<< t5-t4<<endl;
 
 		cudaEventRecord(stopEvent_kernel, 0) ;
 
@@ -531,8 +581,6 @@ int main(int argc, char** argv)
 		cudaEventElapsedTime(&timeForKernel, startEvent_kernel, stopEvent_kernel) ;
 
 		printf("  Time for  Kernel : %f\n",  timeForKernel);
-
-
 
 		cudaMemcpy(outVector , outVector_device , outVectorSize * sizeof(size_t) , cudaMemcpyDeviceToHost) ;
 
