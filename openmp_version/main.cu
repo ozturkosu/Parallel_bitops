@@ -441,12 +441,246 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 float res_size = ((w12-w11)<(w22-w21))?(w12-w11):(w22-w21);
 
 	 size_t min_length = res_size * 1.01;//give 1% more capacity
-
 	 size_t *result_vector = new size_t[min_length] ;
-
 	 size_t *result_ptr = &result_vector[0] ;
 
+	 size_t ones = 0, zeros = 0;
+	 size_t it1 = w11;
+	 size_t it2 = w21;
+	 size_t word1 = vector1[it1];
+	 size_t word2 = vector2[it2];
+	 size_t count = 0;
 
+
+	 while(it1 <= w12 && it2 <= w22) {
+		 if(ismyfill_device(word1) && ismyfill_device(word2)) {  //both are fill words
+			 size_t c1 = word1 & 0x3fffffff;         //get the len of fill word
+			 size_t c2 = word2 & 0x3fffffff;         //get the len of fill word
+			 size_t isone1 = word1 & 0x40000000;     //check if it is one
+			 size_t isone2 = word2 & 0x40000000;     //check if it is one
+
+			 if(c1 == c2) {
+				 if(isone1 && isone2) {
+					 //allZeros = false;
+					 ones += c1;
+					 if(zeros > 0) {
+						 size_t n = 0x80000000 + zeros;
+						 zeros = 0;
+						 result_ptr[count] = n;
+						 count++;
+						 // result_vector.push_back(n);
+					 }
+				 } else {
+					 zeros += c1;
+					 if(ones > 0) {
+						 size_t n = 0xc0000000 + ones;
+						 ones = 0;
+						 result_ptr[count] = n;
+						 count++;
+						 // result_vector.push_back(n);
+					 }
+				 }
+				 word1 = Vector1[++it1];
+				 word2 = Vector2[++it2];
+			 } else if (c1 > c2) {
+				 if(isone1 && isone2) {
+					 //allZeros = false;
+					 ones += c2;
+					 if(zeros > 0) {
+						 size_t n = 0x80000000 + zeros;
+						 zeros = 0;
+						 result_ptr[count] = n;
+						 count++;
+						 // result_vector.push_back(n);
+					 }
+				 } else {
+					 zeros += c2;
+					 if(ones > 0) {
+						 size_t n = 0xc0000000 + ones;
+						 ones = 0;
+						 // result_vector.push_back(n);
+					 }
+				 }
+				 if(isone1)
+					 word1 = 0xc0000000 + (c1 - c2);
+				 else
+					 word1 = 0x80000000 + (c1 - c2);
+				 word2 = vector2[++it2];
+			 } else { //c2 > c1
+				 if(isone1 && isone2) {
+					 //allZeros = false;
+					 ones += c1;
+					 if(zeros > 0) {
+						 size_t n = 0x80000000 + zeros;
+						 zeros = 0;
+						 result_ptr[count] = n;
+						 count++;
+						 // result_vector.push_back(n);
+					 }
+				 } else {
+					 zeros += c1;
+					 if(ones > 0) {
+						 size_t n = 0xc0000000 + ones;
+						 ones = 0;
+						 result_ptr[count] = n;
+						 count++;
+						 // result_vector.push_back(n);
+					 }
+				 }
+				 if(isone2)
+					 word2 = 0xc0000000 + (c2 - c1);
+				 else
+					 word2 = 0x80000000 + (c2 - c1);
+				 word1 = Vector1[++it1];
+			 }
+		 } else if(ismyfill_device(word1) && !ismyfill_device(word2)) { //one fill, one literal
+			 size_t c1 = word1 & 0x3fffffff; //lenth
+			 size_t isone1 = word1 & 0x40000000;  //is one?
+
+			 if(isone1) { //if one, depend on literal
+				 if(ones > 0) {
+					 size_t n = 0xc0000000 + ones;
+					 //allZeros = false;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 if(zeros > 0) {
+					 size_t n = 0x80000000 + zeros;
+					 zeros = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 result_ptr[count] = word2;
+				 count++;
+				 // result_vector.push_back(word2);
+			 } else { //id zero, generate a zero word
+				 if(ones > 0) {
+					 size_t n = 0xc0000000 + ones;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 zeros += 31;
+			 }
+			 if(c1 == 31){
+				 word1 = vector1[++it1];
+			 }
+			 else {
+				 if(isone1)
+					 word1 = 0xc0000000 + (c1 - (size_t)31);
+				 else
+					 word1 = 0x80000000 + (c1 - (size_t)31);
+			 }
+			 word2 = vector2[++it2];
+		 } else if(!ismyfill_device(word1) && ismyfill_device(word2)) { //one literal, one fill
+			 size_t c2 = word2 & 0x3fffffff; //lenth
+			 size_t isone2 = word2 & 0x40000000;  //is one?
+
+			 if(isone2) { //if one, depend on literal
+				 if(ones > 0) {
+					 size_t n = 0xc0000000 + ones;
+					 //allZeros = false;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 if(zeros > 0) {
+					 size_t n = 0x80000000 + zeros;
+					 zeros = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 //if (word1 != 0) //allZeros = false;
+				 result_ptr[count] = word1;
+				 count++;
+				 // result_vector.push_back(word1);
+			 } else { //id zero, generate a zero word
+				 if(ones > 0) {
+					 size_t n = 0xc0000000 + ones;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 zeros += 31;
+			 }
+			 if(c2 == 31)
+				 word2 = Vector2[++it2];
+			 else {
+				 if(isone2)
+					 word2 = 0xc0000000 + (c2 - (size_t)31);
+				 else
+					 word2 = 0x80000000 + (c2 - (size_t)31);
+			 }
+			 word1 = Vector1[++it1];
+		 } else { //both are literal words
+			 size_t num = word1 & word2;
+			 if(num == 0) {
+				 zeros += 31;
+				 if(ones > 0) {
+			 //allZeros = false;
+					 size_t n = 0xc0000000 + ones;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+			 } else if (num == 0x7fffffff) {
+				 ones += 31;
+				 //allZeros = false;
+				 if(zeros > 0) {
+					 size_t n = 0x80000000 + zeros;
+					 zeros = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+			 } else {
+				 if(ones > 0) {
+					 //allZeros = false;
+					 size_t n = 0xc0000000 + ones;
+					 ones = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n);
+				 }
+				 if(zeros > 0) {
+					 size_t n = 0x80000000 + zeros;
+					 zeros = 0;
+					 result_ptr[count] = n;
+					 count++;
+					 // result_vector.push_back(n); //// freq access
+				 }
+				 //if (num != 0) //allZeros = false;
+				 result_ptr[count] = num;
+				 count++;
+				 // result_vector.push_back(num);//// freq access
+			 }
+			 word1 = Vector1[++it1];
+			 word2 = Vector2[++it2];
+		 }
+	 }
+	 if(ones > 0) {
+	 //allZeros = false;
+		 size_t n = 0xc0000000 + ones;
+		 ones = 0;
+		 result_ptr[count] = n;
+		 count++;
+		 // result_vector.push_back(n);
+	 }
+	 if(zeros > 0) {
+		 size_t n = 0x80000000 + zeros;
+		 zeros = 0;
+		 result_ptr[count] = n;
+		 count++;
+		 // result_vector.push_back(n);
+	 }
 
 
 
