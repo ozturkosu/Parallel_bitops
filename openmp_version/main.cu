@@ -439,13 +439,14 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 int w22 = myBinarySearchGPU(prefixSum2,0,Vector2_size-1,b2);
 
 	 float res_size = ((w12-w11)<(w22-w21))?(w12-w11):(w22-w21);
+
 	 size_t min_length = res_size * 1.01;//give 1% more capacity
 
-	 size_t result_vector[min_length] ;
+	 size_t *result_vector = new size_t[min_length] ;
 
 	 size_t *result_ptr = &result_vector[0] ;
 
-	 
+
 
 
 
