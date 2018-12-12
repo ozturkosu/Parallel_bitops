@@ -355,7 +355,7 @@ int main(int argc, char** argv)
     if(DATA_GENERATION)
     {
 				cout<<"data generation*\n";
-        size_t items = 10000000;
+        size_t items = 20000000;
         float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
@@ -505,19 +505,6 @@ int main(int argc, char** argv)
 
 
 		cudaMemcpy(outVector , outVector_device , outVectorSize * sizeof(size_t) , cudaMemcpyDeviceToHost) ;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
