@@ -447,8 +447,8 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 size_t ones = 0, zeros = 0;
 	 size_t it1 = w11;
 	 size_t it2 = w21;
-	 size_t word1 = vector1[it1];
-	 size_t word2 = vector2[it2];
+	 size_t word1 = Vector1[it1];
+	 size_t word2 = Vector2[it2];
 	 size_t count = 0;
 
 
