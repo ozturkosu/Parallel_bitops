@@ -424,6 +424,8 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 
 	 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
+	 size_t *v1_ptr = &Vector1[0];
+	 size_t *v2_ptr = &Vector2[0];
 
 }
 
@@ -491,8 +493,8 @@ int main(int argc, char** argv)
 		comp_bitset2_device = comp_bitset2 ;
 
 
-		size_t* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
-		size_t* comp_dev_vect2 = thrust::raw_pointer_cast(&comp_bitset2_device) ;
+		//size_t* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
+		//size_t* comp_dev_vect2 = thrust::raw_pointer_cast(&comp_bitset2_device) ;
 
 
 		//lets calculate prefix sum and word array for cuda calculation
