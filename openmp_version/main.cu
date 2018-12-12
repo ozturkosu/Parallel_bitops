@@ -418,7 +418,7 @@ int main(int argc, char** argv)
 		//Create word and prefix sum for vector 1
 
 		size_t* word_lengths1 = new size_t[vec1_size]; //vector of length of the words
-		size_t* prefix_sum1 = new size_t[vec2_size]; // prefix-sum generated form word_lengths1
+		size_t* prefix_sum1 = new size_t[vec1_size]; // prefix-sum generated form word_lengths1
 		size_t pre_sum1 = 0;
 		size_t vector1_bit_length = 0;
 
@@ -458,6 +458,44 @@ int main(int argc, char** argv)
 	    pre_sum2 = prefix_sum2[i];
 	    vector2_bit_length+=word_length;
 	  }
+
+
+		cudaEvent_t startEvent, stopEvent;
+
+		size_t * Vector1 = (size_t)malloc( vec1_size * sizeof(size_t)) ;
+		size_t * Vector2 = (size_t)malloc( vec2_size * sizeof(size_t)) ;
+
+		size_t outVectorSize = (vec1_size < vec2_size)?vec1_size:vec2Size ;
+
+		size_t * outVector = (size_t)malloc(outVectorSize * sizeof(size_t) ) ;
+
+
+		size_t * Vector1_device;
+		size_t * Vector2_device;
+		size_t * outVector_device;
+		size_t * presum2_device ;
+		size_t * presum1_device ;
+		size_t * word_length_device ;
+		size_t * word_length_device2 ;
+
+		cudaMalloc((void**) &Vector1_device , vect1_size * sizeof(size_t) );
+		cudaMalloc((void**) &Vector2_device , vect2_size * sizeof(size_t) );
+		cudaMalloc((void**) &outVector_device , outVectorSize * sizeof(size_t)) ;
+		cudaMalloc((void**) &presum1_device , vec1_size * sizeof(size_t)) ;
+		cudaMalloc((void**) &presum2_device , vec2_size * sizeof(size_t)) ;
+		cudaMalloc((void**) &word_length_device , vec1_size * sizeof(size_t)) ;
+		cudaMalloc((void**) &word_length_device2 , vec2_size * sizeof(size_t)) ;
+
+
+		
+
+
+
+
+
+
+
+
 
 
 
