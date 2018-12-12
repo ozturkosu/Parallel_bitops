@@ -424,6 +424,10 @@ int main(int argc, char** argv)
 		size_t pre_sum1 = 0;
 		size_t vector1_bit_length = 0;
 
+		cudaEvent_t startEventPrefixSum, stopEventPrefixSum;
+
+
+
 
 		//Generate prefix sum and words size array for vector 1
 		for(int i = 0 ; i<vec1_size;i++)
@@ -480,6 +484,10 @@ int main(int argc, char** argv)
 		size_t * word_length_device ;
 		size_t * word_length_device2 ;
 
+
+		std::copy(comp_bitset1.begin(), comp_bitset1.end() , Vector1);
+		std::copy(comp_bitset2.begin(), comp_bitset2.end() , Vector2);
+
 		cudaMalloc((void**) &Vector1_device , vec1_size * sizeof(size_t) );
 		cudaMalloc((void**) &Vector2_device , vec2_size * sizeof(size_t) );
 		cudaMalloc((void**) &outVector_device , outVectorSize * sizeof(size_t)) ;
@@ -521,6 +529,23 @@ int main(int argc, char** argv)
 
 
 		cudaMemcpy(outVector , outVector_device , outVectorSize * sizeof(size_t) , cudaMemcpyDeviceToHost) ;
+
+
+		cudaFree(Vector1_device);
+		cudaFree(Vector2_device);
+		cudaFree(outVector_device);
+		cudaFree(presum1_device);
+		cudaFree(presum2_device);
+		cudaFree(word_length_device);
+		cudaFree(word_length_device2) ;
+
+
+
+
+
+
+
+
 
 
 
