@@ -487,6 +487,23 @@ int main(int argc, char** argv)
 		cudaMalloc((void**) &word_length_device2 , vec2_size * sizeof(size_t)) ;
 
 
+		cudaMemcpy(Vector1_device, Vector1 ,vec1_size * sizeof(size_t) , cudaMemcpyHostToDevice ) ;
+		cudaMemcpy(Vector2_device, Vector2 ,vec2_size * sizeof(size_t) , cudaMemcpyHostToDevice ) ;
+		cudaMemcpy(presum1_device, prefix_sum1 , vec1_size * sizeof(size_t) , cudaMemcpyHostToDevice ) ;
+		cudaMemcpy(presum2_device, prefix_sum2 , vec2_size * sizeof(size_t) , cudaMemcpyHostToDevice ) ;
+		cudaMemcpy(word_length_device , word_lengths1 , vec1_size * sizeof(size_t) ,  cudaMemcpyHostToDevice  ) ;
+		cudaMemcpy(word_length_device2 , word_lengths2 , vec2_size * sizeof(size_t) ,  cudaMemcpyHostToDevice  ) ;
+
+		dim3 dimGrid();
+		dim3 dimBlock();
+
+
+		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device
+		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+
+
+		cudaMemcpy(outVector , outVector_device , outVectorSize * sizeof(size_t) , cudaMemcpyDeviceToHost) ;
+
 
 
 
