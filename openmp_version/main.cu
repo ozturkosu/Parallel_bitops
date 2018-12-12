@@ -348,6 +348,8 @@ int main(int argc, char** argv)
     cout<<"Usage: ./proj num_threads\n";
     cout<<"***************************************************************\n";
     int NUM_THREADS_OPENMP =atoi(argv[1]);
+
+
     vector<size_t> comp_bitset1;
     vector<size_t> comp_bitset2;
 
@@ -460,7 +462,7 @@ int main(int argc, char** argv)
 	  }
 
 
-		cudaEvent_t startEvent, stopEvent;
+		cudaEvent_t startEvent_kernel, stopEvent_kernel;
 
 		size_t * Vector1 = (size_t*)malloc( vec1_size * sizeof(size_t)) ;
 		size_t * Vector2 = (size_t*)malloc( vec2_size * sizeof(size_t)) ;
@@ -500,8 +502,22 @@ int main(int argc, char** argv)
 		dim3 dimBlock(128,1,1);
 
 
+		cudaEventCreate(&startEvent_kernel);
+		cudaEventCreate(&stopEvent_kernel) ;
+
+		cudaEventRecord(startEvent_kernel, 0) ;
+
 		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
 		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+
+
+		cudaEventRecord(stopEvent_kernel, 0) ;
+
+		float timeForKernel;
+		cudaEventElapsedTime(&timeForKernel, startEvent_kernel, stopEvent_kernel) ;
+
+		printf("  Time for  Kernel : %f\n",  timeForKernel);
+
 
 
 		cudaMemcpy(outVector , outVector_device , outVectorSize * sizeof(size_t) , cudaMemcpyDeviceToHost) ;
