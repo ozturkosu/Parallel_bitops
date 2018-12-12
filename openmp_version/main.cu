@@ -505,7 +505,7 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 					 word1 = 0xc0000000 + (c1 - c2);
 				 else
 					 word1 = 0x80000000 + (c1 - c2);
-				 word2 = vector2[++it2];
+				 word2 = Vector2[++it2];
 			 } else { //c2 > c1
 				 if(isone1 && isone2) {
 					 //allZeros = false;
@@ -567,7 +567,7 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 				 zeros += 31;
 			 }
 			 if(c1 == 31){
-				 word1 = vector1[++it1];
+				 word1 = Vector1[++it1];
 			 }
 			 else {
 				 if(isone1)
@@ -575,7 +575,7 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 				 else
 					 word1 = 0x80000000 + (c1 - (size_t)31);
 			 }
-			 word2 = vector2[++it2];
+			 word2 = Vector2[++it2];
 		 } else if(!ismyfill_device(word1) && ismyfill_device(word2)) { //one literal, one fill
 			 size_t c2 = word2 & 0x3fffffff; //lenth
 			 size_t isone2 = word2 & 0x40000000;  //is one?
