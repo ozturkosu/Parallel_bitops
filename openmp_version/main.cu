@@ -488,6 +488,12 @@ int main(int argc, char** argv)
 		std::copy(comp_bitset1.begin(), comp_bitset1.end() , Vector1);
 		std::copy(comp_bitset2.begin(), comp_bitset2.end() , Vector2);
 
+		printf("%d\n", Vector1[10]);
+		printf("%d\n", Vector1[11]);
+		printf("%d\n", Vector1[12]);
+		printf("%d\n", Vector1[13]);
+
+
 		cudaMalloc((void**) &Vector1_device , vec1_size * sizeof(size_t) );
 		cudaMalloc((void**) &Vector2_device , vec2_size * sizeof(size_t) );
 		cudaMalloc((void**) &outVector_device , outVectorSize * sizeof(size_t)) ;
@@ -538,15 +544,6 @@ int main(int argc, char** argv)
 		cudaFree(presum2_device);
 		cudaFree(word_length_device);
 		cudaFree(word_length_device2) ;
-
-
-
-
-
-
-
-
-
 
 
 
