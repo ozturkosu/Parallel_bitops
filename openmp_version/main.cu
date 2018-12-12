@@ -409,7 +409,7 @@ int main(int argc, char** argv)
     if(DATA_GENERATION)
     {
 				cout<<"data generation*\n";
-        size_t items = 20000000;
+        size_t items = 80000000;
         float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
