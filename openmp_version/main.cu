@@ -431,6 +431,19 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 size_t b1 = tid*CHUNK_SIZE;
 	 size_t b2 = (tid+1)*CHUNK_SIZE;
 
+	 ////2.2 calc the word area
+	 int w11 = myBinarySearchGPU(prefixSum1,0,Vector1_size-1,b1);
+	 int w12 = myBinarySearchGPU(prefixSum1,0,Vector1_size-1,b2);
+
+	 int w21 = myBinarySearchGPU(prefixSum2,0,Vector2_size-1,b1);
+	 int w22 = myBinarySearchGPU(prefixSum2,0,Vector2_size-1,b2);
+
+
+
+
+
+
+
 }
 
 
