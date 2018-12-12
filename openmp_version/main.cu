@@ -414,7 +414,7 @@ __global__ void parallel_and_kernel_V2(vector<size_t> &vector1, vector<size_t> &
 
 */
 
-/*
+
 
 __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * prefixSum1, size_t * wordSize1  , size_t * Vector2,
 	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
@@ -422,24 +422,24 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 //comp_bitset1_device[0]=1;
 	 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 
-	 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+	 //size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
 
 }
 
-*/
+
 
 int main(int argc, char** argv)
 {
     cout<<"Usage: ./proj num_threads\n";
     cout<<"***************************************************************\n";
-    int NUM_THREADS =atoi(argv[1]);
+    int NUM_THREADS_OPENMP =atoi(argv[1]);
     vector<size_t> comp_bitset1;
     vector<size_t> comp_bitset2;
 
     mybitops Bitops;
-    //if(DATA_GENERATION)
-    //{
+    if(DATA_GENERATION)
+    {
 				cout<<"data generation*\n";
         size_t items = 10000000;
         float fill_percent = .001;
@@ -461,15 +461,12 @@ int main(int argc, char** argv)
         cout<<"vector size:"<< comp_bitset1.size()<<endl;
         comp_bitset2 = comp_bitset1;
         Bitops.save_vector(comp_bitset1,"./vec4", 1000);
-    //}
-		/*
+    }
     else
     {
         comp_bitset1 = Bitops.load_vector("../data/lvec1");
         comp_bitset2 = Bitops.load_vector("../data/lvec1");
     }
-
-		*/
 
     // clock_t t2 = clock();
     //Bitops.parallel_and(comp_bitset1,comp_bitset2,NUM_THREADS);
