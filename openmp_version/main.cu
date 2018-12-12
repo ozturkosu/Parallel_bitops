@@ -66,6 +66,8 @@ __device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 
 }
 
+/*
+
 __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t * Vector2,
 	int Vector2_size ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
 {
@@ -118,7 +120,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 
 }
 
-
+*/
 
 __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * prefixSum1, size_t * wordSize1  , size_t * Vector2,
 	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
