@@ -427,6 +427,10 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 	 size_t *v1_ptr = &Vector1[0];
 	 size_t *v2_ptr = &Vector2[0];
 
+
+	 size_t b1 = tid*CHUNK_SIZE;
+	 size_t b2 = (tid+1)*CHUNK_SIZE;
+
 }
 
 
