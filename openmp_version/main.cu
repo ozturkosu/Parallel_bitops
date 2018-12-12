@@ -393,7 +393,7 @@ int main(int argc, char** argv)
     Bitops.logic_and_ref(&comp_bitset1,&comp_bitset2,0,comp_bitset1.size()-1,0,comp_bitset2.size()-1);
     clock_t t5 = clock();
     cout<<"seq_and time:"<< t5-t4<<endl;
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
 
 
 		//Lets do it in Cuda version
