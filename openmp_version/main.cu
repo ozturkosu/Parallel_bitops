@@ -575,7 +575,9 @@ int main(int argc, char** argv)
 
 		clock_t t_KERNEL2 = clock();
 
-		cout<<"Kernel Time :"<< t_KERNEL2 - t_KERNEL1 <<endl;
+		double elapsed_sec = double(t_KERNEL2 - t_KERNEL1) / CLOCKS_PER_SEC ;
+
+		cout<<"Kernel Time :"<< elapsed_sec <<endl;
 
 		cudaEventRecord(stopEvent_kernel, 0) ;
 
