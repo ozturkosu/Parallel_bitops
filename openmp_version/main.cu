@@ -494,11 +494,13 @@ int main(int argc, char** argv)
 		cudaMemcpy(word_length_device , word_lengths1 , vec1_size * sizeof(size_t) ,  cudaMemcpyHostToDevice  ) ;
 		cudaMemcpy(word_length_device2 , word_lengths2 , vec2_size * sizeof(size_t) ,  cudaMemcpyHostToDevice  ) ;
 
-		dim3 dimGrid();
-		dim3 dimBlock();
 
 
-		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device
+		dim3 dimGrid(10000,1,1);
+		dim3 dimBlock(128,1,1);
+
+
+		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
 		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
 
 
