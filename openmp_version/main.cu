@@ -125,11 +125,11 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 		size_t b2 = (tid+1)*CHUNK_SIZE;
 
 		////2.2 calc the word area
-		int w11 = myBinarySearchGPU(prefixSum1,0,Vector1_size-1,b1);
-		int w12 = myBinarySearchGPU(prefixSum1,0,Vector1_size-1,b2);
+		int w11 = myBinarySearchGPU(prefix_sum1,0,Vector1_size-1,b1);
+		int w12 = myBinarySearchGPU(prefix_sum1,0,Vector1_size-1,b2);
 
-		int w21 = myBinarySearchGPU(prefixSum2,0,Vector2_size-1,b1);
-		int w22 = myBinarySearchGPU(prefixSum2,0,Vector2_size-1,b2);
+		int w21 = myBinarySearchGPU(prefix_sum2,0,Vector2_size-1,b1);
+		int w22 = myBinarySearchGPU(prefix_sum2,0,Vector2_size-1,b2);
 
 		float res_size = ((w12-w11)<(w22-w21))?(w12-w11):(w22-w21);
 
