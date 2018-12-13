@@ -81,10 +81,10 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
  		 size_t vector1_bit_length = 0;
 
 		 //Generate prefix sum and words size array for vector 1
-		 for(int i = 0 ; i<vec1_size;i++)
+		 for(int i = 0 ; i<Vector1_size;i++)
 		 {
 			 size_t word = comp_bitset1[i];
-			 int wt = Bitops.word_type(word);
+			 int wt = word_type_device(word);
 			 size_t word_length = 31;
 			 if(wt != 0)// if a fill word
 				 word_length = word & 0x3fffffff;
@@ -101,10 +101,10 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 		 size_t pre_sum2 = 0;
 		 size_t vector2_bit_length = 0;
 
-		 for(int i = 0 ; i<vec2_size;i++)
+		 for(int i = 0 ; i<Vector2_size;i++)
 		 {
 			 size_t word = comp_bitset2[i];
-			 int wt = Bitops.word_type(word);
+			 int wt = word_type_device(word);
 			 size_t word_length = 31;
 			 if(wt != 0)// if a fill word
 				 word_length = word & 0x3fffffff;
@@ -118,7 +118,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 		 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
 		 size_t *v1_ptr = &Vector1[0];
-		size_t *v2_ptr = &Vector2[0];
+		 size_t *v2_ptr = &Vector2[0];
 
 
 		size_t b1 = tid*CHUNK_SIZE;
