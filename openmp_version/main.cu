@@ -671,7 +671,7 @@ int main(int argc, char** argv)
     {
 				cout<<"data generation*\n";
         size_t items = 100000000;
-        float fill_percent = .009;
+        float fill_percent = .012;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
         for(size_t i=0; i<items*fill_percent; i++) {
