@@ -836,8 +836,12 @@ int main(int argc, char** argv)
 
 		clock_t t_KERNEL1 = clock();
 
-		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
-		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+		//parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
+		//                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+
+	  parallelAndDevice2<<<dimGrid, dimBlock>>>( Vector1_device, vec1_size , Vector2_device,
+										vec2_size  , outVector_device);
+
 
 		clock_t t_KERNEL2 = clock();
 
