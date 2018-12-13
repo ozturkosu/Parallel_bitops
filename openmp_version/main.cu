@@ -397,9 +397,12 @@ __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * p
 
 int main(int argc, char** argv)
 {
-    cout<<"Usage: ./proj num_threads\n";
+    cout<<"Usage: ./proj bit_number fill_rate\n";
     cout<<"***************************************************************\n";
-    int NUM_THREADS_OPENMP =atoi(argv[1]);
+    //int NUM_THREADS_OPENMP =atoi(argv[1]);
+		size_t items = atoi(argv[1]);
+		float fill_percent = atoi(argv[2]);
+		//int NUM_THREADS_OPENMP =atoi(argv[1]);
 
 
     vector<size_t> comp_bitset1;
@@ -409,8 +412,8 @@ int main(int argc, char** argv)
     if(DATA_GENERATION)
     {
 				cout<<"data generation*\n";
-        size_t items = 80000000;
-        float fill_percent = .001;
+        //size_t items = 80000000;
+        //float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
         for(size_t i=0; i<items*fill_percent; i++) {
