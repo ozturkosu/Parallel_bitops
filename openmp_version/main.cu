@@ -465,7 +465,7 @@ int main(int argc, char** argv)
 		//size_t* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
 		//size_t* comp_dev_vect2 = thrust::raw_pointer_cast(&comp_bitset2_device) ;
 
-/*
+
 		//lets calculate prefix sum and word array for cuda calculation
 
 		size_t vec1_size = comp_bitset1.size();
@@ -600,7 +600,7 @@ int main(int argc, char** argv)
 		cudaFree(word_length_device);
 		cudaFree(word_length_device2) ;
 
-*/
+
 
 
     return 0;
