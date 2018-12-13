@@ -455,11 +455,11 @@ int main(int argc, char** argv)
 
 		//thrust::device_vector
 
-		thrust::device_vector<size_t>  comp_bitset1_device;
-		thrust::device_vector<size_t>  comp_bitset2_device;
+		//thrust::device_vector<size_t>  comp_bitset1_device;
+		//thrust::device_vector<size_t>  comp_bitset2_device;
 
-		comp_bitset1_device = comp_bitset1 ;
-		comp_bitset2_device = comp_bitset2 ;
+		//comp_bitset1_device = comp_bitset1 ;
+		//comp_bitset2_device = comp_bitset2 ;
 
 
 		//size_t* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
