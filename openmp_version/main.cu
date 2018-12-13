@@ -69,11 +69,11 @@ __device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 
 
 __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t * Vector2,
-	int Vector2_size ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
+	int Vector2_size ,size_t * outVector)
 {
 		 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 
-		 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
+		 //size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
 		 size_t* word_lengths1 = new size_t[Vector1_size]; //vector of length of the words
  		 size_t* prefix_sum1 = new size_t[Vector1_size]; // prefix-sum generated form word_lengths1
@@ -115,6 +115,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 			 vector2_bit_length+=word_length;
 		 }
 
+		 size_t min_bit_length = (vector1_bit_length<vector2_bit_length)?vector1_bit_length:vector2_bit_length;
 
 		 size_t *v1_ptr = &Vector1[0];
 		size_t *v2_ptr = &Vector2[0];
