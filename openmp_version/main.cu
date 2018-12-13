@@ -445,7 +445,7 @@ int main(int argc, char** argv)
     // cout<<"parallel_and time:"<< t3-t2<<endl;
 
     clock_t t4 = clock();
-    Bitops.logic_and_ref(&comp_bitset1,&comp_bitset2,0,comp_bitset1.size()-1,0,comp_bitset2.size()-1);
+    //Bitops.logic_and_ref(&comp_bitset1,&comp_bitset2,0,comp_bitset1.size()-1,0,comp_bitset2.size()-1);
     clock_t t5 = clock();
     cout<<"seq_and time:"<< t5-t4<<endl;
     //pthread_exit(NULL);
@@ -465,7 +465,7 @@ int main(int argc, char** argv)
 		//size_t* comp_dev_vect1 = thrust::raw_pointer_cast(&comp_bitset1_device) ;
 		//size_t* comp_dev_vect2 = thrust::raw_pointer_cast(&comp_bitset2_device) ;
 
-/*
+
 		//lets calculate prefix sum and word array for cuda calculation
 
 		size_t vec1_size = comp_bitset1.size();
@@ -601,7 +601,7 @@ int main(int argc, char** argv)
 		cudaFree(word_length_device2) ;
 
 
-*/
+
 
     return 0;
 }
