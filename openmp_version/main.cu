@@ -12,7 +12,7 @@
 using namespace std;
 #define DATA_GENERATION true
 
-#define CHUNK_SIZE 128000
+//#define CHUNK_SIZE 128000
 
 
 __device__ int word_type_device(size_t word1){
@@ -386,7 +386,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 
 
 __global__ void parallelAndDevice(size_t * Vector1, int Vector1_size, size_t * prefixSum1, size_t * wordSize1  , size_t * Vector2,
-	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length)
+	int Vector2_size, size_t * prefixSum2 , size_t * wordSize2 ,size_t * outVector, size_t vector1_bit_length, size_t vector2_bit_length, int CHUNK_SIZE)
 {
 	 //comp_bitset1_device[0]=1;
 	 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
@@ -662,7 +662,7 @@ int main(int argc, char** argv)
 {
     cout<<"Usage: ./proj bit_number fill_rate\n";
     cout<<"***************************************************************\n";
-    //int NUM_THREADS_OPENMP =atoi(argv[1]);
+    int CHUNK_SIZE =atoi(argv[1]);
 		//size_t items = atoi(argv[1]);
 		//float fill_percent = atoi(argv[2]);
 		//int NUM_THREADS_OPENMP =atoi(argv[1]);
@@ -837,7 +837,7 @@ int main(int argc, char** argv)
 		clock_t t_KERNEL1 = clock();
 
 		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
-		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length, CHUNK_SIZE) ;
 
 	  //parallelAndDevice2<<<dimGrid, dimBlock>>>( Vector1_device, vec1_size , Vector2_device,
 		//								vec2_size  , outVector_device);
