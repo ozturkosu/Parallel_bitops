@@ -83,7 +83,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 		 //Generate prefix sum and words size array for vector 1
 		 for(int i = 0 ; i<Vector1_size;i++)
 		 {
-			 size_t word = comp_bitset1[i];
+			 size_t word = Vector1[i];
 			 int wt = word_type_device(word);
 			 size_t word_length = 31;
 			 if(wt != 0)// if a fill word
@@ -103,7 +103,7 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 
 		 for(int i = 0 ; i<Vector2_size;i++)
 		 {
-			 size_t word = comp_bitset2[i];
+			 size_t word = Vector2[i];
 			 int wt = word_type_device(word);
 			 size_t word_length = 31;
 			 if(wt != 0)// if a fill word
