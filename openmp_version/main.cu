@@ -12,7 +12,7 @@
 using namespace std;
 #define DATA_GENERATION true
 
-#define CHUNK_SIZE 3200
+#define CHUNK_SIZE 200
 
 
 __device__ int word_type_device(size_t word1){
@@ -675,7 +675,7 @@ int main(int argc, char** argv)
     if(DATA_GENERATION)
     {
 				cout<<"data generation*\n";
-        size_t items = 40000000;
+        size_t items = 100000000;
         float fill_percent = .001;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
@@ -825,7 +825,7 @@ int main(int argc, char** argv)
 
 
 
-		dim3 dimGrid(10000,1,1);
+		dim3 dimGrid(10240,1,1);
 		dim3 dimBlock(128,1,1);
 
 
@@ -836,11 +836,11 @@ int main(int argc, char** argv)
 
 		clock_t t_KERNEL1 = clock();
 
-		//parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
-		//                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
+		parallelAndDevice<<<dimGrid, dimBlock>>>(Vector1_device , vec1_size, presum1_device, word_length_device,
+		                Vector2_device , vec2_size ,  presum2_device , word_length_device2 , outVector_device, vector1_bit_length , vector2_bit_length) ;
 
-	  parallelAndDevice2<<<dimGrid, dimBlock>>>( Vector1_device, vec1_size , Vector2_device,
-										vec2_size  , outVector_device);
+	  //parallelAndDevice2<<<dimGrid, dimBlock>>>( Vector1_device, vec1_size , Vector2_device,
+		//								vec2_size  , outVector_device);
 
 
 		clock_t t_KERNEL2 = clock();
