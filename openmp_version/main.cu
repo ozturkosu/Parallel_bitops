@@ -69,7 +69,7 @@ __device__ size_t myBinarySearchGPU(size_t* arr, size_t l, size_t r, size_t x)
 
 
 __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t * Vector2,
-	int Vector2_size ,size_t * outVector)
+	int Vector2_size ,size_t * outVector , int CHUNK_SIZE)
 {
 		 int tid= blockIdx.x * blockDim.x + threadIdx.x ;
 
