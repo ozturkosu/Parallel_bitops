@@ -12,7 +12,7 @@
 using namespace std;
 #define DATA_GENERATION true
 
-#define CHUNK_SIZE 6400
+#define CHUNK_SIZE 128000
 
 
 __device__ int word_type_device(size_t word1){
