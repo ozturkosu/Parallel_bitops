@@ -6,7 +6,7 @@
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <ctime>
-
+#include <cuda_profiler_api.h>
 //Project Fpr GPU classes
 
 using namespace std;
@@ -867,7 +867,7 @@ int main(int argc, char** argv)
 		cudaFree(word_length_device);
 		cudaFree(word_length_device2) ;
 
-
+		cudaProfilerStop();
 
 
     return 0;
