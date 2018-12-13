@@ -376,11 +376,6 @@ __global__ void parallelAndDevice2(size_t * Vector1, int Vector1_size,  size_t *
 			// result_vector.push_back(n);
 		}
 
-
-
-
-
-
 }
 
 
@@ -676,7 +671,7 @@ int main(int argc, char** argv)
     {
 				cout<<"data generation*\n";
         size_t items = 100000000;
-        float fill_percent = .001;
+        float fill_percent = .003;
         boost::dynamic_bitset<> tempvector(items);
         cout<<"Data Generation"<<endl;
         for(size_t i=0; i<items*fill_percent; i++) {
